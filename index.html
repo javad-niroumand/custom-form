@@ -218,30 +218,55 @@
   </div>
 
   <!-- JavaScript -->
-  <script>
-    const form = document.getElementById('sanvartisForm');
-    const bankInput = document.getElementById('bank');
-    const errorDiv = document.getElementById('bank-error');
-    const formContainer = document.getElementById('formContainer');
-    const successPopup = document.getElementById('successPopup');
+<script>
+  // Prefill form from API
+  window.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const response = await fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1');
+      const user = await response.json();
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
+      document.getElementById('fullname').value = user.fullname || '';
+      document.getElementById('phonenumber').value = user.phonenumber || '';
+      document.getElementById('intent').value = user.intent || '';
+    } catch (err) {
+      console.error('Failed to fetch user data:', err);
+    }
+  });
 
-      const bankValue = bankInput.value.trim();
+  // Submit form data
+  document.getElementById('customForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-      if (!/^\d{12}$/.test(bankValue)) {
-        errorDiv.style.display = 'block';
-        bankInput.focus();
+    const bankInput = document.getElementById('bankinfo').value;
+    const bankPattern = /^\d{12}$/;
+
+    if (!bankPattern.test(bankInput)) {
+      alert("Bank transfer information must be exactly 12 digits.");
+      return;
+    }
+
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        document.getElementById('customForm').style.display = 'none';
+        document.getElementById('overlay').style.display = 'flex';
       } else {
-        errorDiv.style.display = 'none';
-        form.reset();
-        document.getElementById('range-value').textContent = '10 km';
-        formContainer.remove(); // completely remove form from DOM
-        successPopup.style.display = 'flex'; // show success message
+        alert('❌ Submission failed. Please try again.');
       }
-    });
-  </script>
+    } catch (error) {
+      alert('🚨 Error during submission: ' + error.message);
+    }
+  });
+</script>
+
 
 </body>
 </html>
