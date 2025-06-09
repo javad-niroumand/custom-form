@@ -143,59 +143,54 @@
   </div>
 </div>
 <script>
-  // Prefill data for customerid = 1
+  // Prefill form from API
   window.addEventListener('DOMContentLoaded', async () => {
     try {
-      const res = await fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1');
-      const data = await res.json();
+      const response = await fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1');
+      const user = await response.json();
 
-      document.getElementById('Username').value = data.Username || '';
-      document.getElementById('PhoneNumber').value = data.PhoneNumber || '';
-      document.getElementById('Email').value = data.Email || '';
-      document.getElementById('MedicalConcern').value = data.MedicalConcern || '';
-      document.getElementById('Urgency').value = data.Urgency || 'Regular Urgency';
-      document.getElementById('language').value = data.language || 'English';
-      document.getElementById('Address').value = data.Address || '';
-      document.getElementById('BirthData').value = data.BirthData?.substring(0, 10) || '';
-      document.getElementById('SearchRadius').value = data.SearchRadius || 10;
-      document.getElementById('BankTransfer').value = data.BankTransfer?.toString().padStart(12, '0') || '';
+      document.getElementById('Username').value = user.fullname || '';
+      document.getElementById('phonenumber').value = user.phonenumber || '';
+      document.getElementById('MedicalConcern').value = user.intent || '';
     } catch (err) {
       console.error('Failed to fetch user data:', err);
     }
   });
 
-  // Form submission
-  document.getElementById('customerForm').addEventListener('submit', async (e) => {
+  // Submit form data
+  document.getElementById('customForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const bankVal = document.getElementById('BankTransfer').value;
-    if (!/^\d{12}$/.test(bankVal)) {
-      alert('Bank transfer information must be exactly 12 digits.');
+    const bankInput = document.getElementById('bankinfo').value;
+    const bankPattern = /^\d{12}$/;
+
+    if (!bankPattern.test(bankInput)) {
+      alert("Bank transfer information must be exactly 12 digits.");
       return;
     }
 
-    const formData = new FormData(e.target);
+    const formData = new FormData(this);
     const data = Object.fromEntries(formData.entries());
-    data.costumerid = "1";
 
     try {
-      const res = await fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData', {
+      const response = await fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
 
-      if (res.ok) {
-        document.getElementById('customerForm').style.display = 'none';
+      if (response.ok) {
+        document.getElementById('customForm').style.display = 'none';
         document.getElementById('overlay').style.display = 'flex';
       } else {
-        alert('❌ Submission failed.');
+        alert('❌ Submission failed. Please try again.');
       }
-    } catch (err) {
-      alert('🚨 Error: ' + err.message);
+    } catch (error) {
+      alert('🚨 Error during submission: ' + error.message);
     }
   });
 </script>
+
 
 </body>
 </html>
