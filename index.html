@@ -1,223 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Sanvartis Form</title>
+  <meta charset="UTF-8">
+  <title>Custom Form</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      color: #fff;
-      background: linear-gradient(to bottom, #4a4642, #1f1e1e);
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #615f5b, #2b2b2b);
+      color: white;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      align-items: center;
     }
 
     header {
-      background-color: #ffffff;
+      background: white;
+      padding: 10px;
+      width: 100%;
       display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 15px 0;
     }
 
     header img {
-      height: 40px;
+      height: 60px;
     }
 
-    main {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 20px;
-    }
-
-    .form-container {
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 40px;
+    form {
+      background-color: #3b3b3b;
+      padding: 20px;
       border-radius: 12px;
-      width: 100%;
-      max-width: 450px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    }
-
-    h2 {
-      text-align: center;
-      margin-top: 0;
-      font-size: 24px;
-      color: #f5b126;
+      margin-top: 30px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
     label {
       display: block;
       margin-top: 15px;
-      font-weight: bold;
     }
 
-    input, select {
+    input, textarea, select {
       width: 100%;
-      padding: 10px;
+      padding: 8px;
       margin-top: 5px;
-      border-radius: 5px;
+      border-radius: 6px;
       border: none;
-      background-color: #333;
-      color: #fff;
     }
 
-    input[type="range"] {
-      width: 100%;
-      margin-top: 10px;
-    }
-
-    .range-value {
-      margin-top: 5px;
-      text-align: right;
-      color: #f5b126;
-      font-weight: bold;
-    }
-
-    .hint {
-      font-size: 12px;
-      color: #ccc;
-      margin-top: 4px;
-    }
-
-    .error {
-      color: #ff4444;
-      font-size: 13px;
-      display: none;
-      margin-top: 5px;
-    }
-
-    .submit-btn {
-      margin-top: 25px;
-      width: 100%;
-      background-color: #f5b126;
+    input[type="submit"] {
+      margin-top: 20px;
+      background-color: #f0a500;
       color: #000;
       font-weight: bold;
-      padding: 12px;
-      border: none;
-      border-radius: 5px;
       cursor: pointer;
     }
 
-    .submit-btn:hover {
-      background-color: #e0a31e;
-    }
-
-    footer {
-      background-color: #1f1e1e;
-      color: #ccc;
+    .footer {
+      margin-top: 50px;
       text-align: center;
-      padding: 15px 10px;
       font-size: 14px;
-    }
-
-    footer a {
       color: #ccc;
-      text-decoration: none;
-      margin: 0 10px;
     }
 
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    /* Success popup */
-    #successPopup {
-      display: none;
+    .overlay {
       position: fixed;
       top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 9999;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
       justify-content: center;
       align-items: center;
+      z-index: 9999;
     }
 
-    #successPopup .popup-content {
-      background: white;
-      padding: 30px 40px;
-      border-radius: 12px;
+    .success-message {
+      background: #222;
+      padding: 40px;
+      border-radius: 10px;
+      color: #f0a500;
+      font-size: 20px;
       text-align: center;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-      max-width: 90%;
-    }
-
-    #successPopup h2 {
-      color: #28a745;
-    }
-
-    #successPopup p {
-      color: #333;
-      font-size: 16px;
-      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Logo -->
-  <header>
-    <img src="logo.png" alt="Sanvartis Logo">
-  </header>
+<header>
+  <img src="logo.png" alt="Company Logo">
+</header>
 
-  <!-- Main Form -->
-  <main>
-    <div class="form-container" id="formContainer">
-      <h2>Submit Your Request</h2>
-      <form id="sanvartisForm">
-        <label for="intent">Intent</label>
-        <input type="text" id="intent" name="intent" placeholder="What do you need help with?" required>
+<form id="customForm">
+  <label for="fullname">Full Name</label>
+  <input type="text" name="fullname" id="fullname" required>
 
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" required>
+  <label for="phonenumber">Phone Number</label>
+  <input type="tel" name="phonenumber" id="phonenumber" required>
 
-        <label for="address">Address</label>
-        <input type="text" id="address" name="address" required>
+  <label for="intent">Intent</label>
+  <input type="text" name="intent" id="intent" required>
 
-        <label for="radius">Search Radius (km)</label>
-        <input type="range" id="radius" name="radius" min="1" max="100" value="10"
-               oninput="document.getElementById('range-value').textContent = this.value + ' km'">
-        <div class="range-value" id="range-value">10 km</div>
-        <div class="hint">Used to search for treatment locations</div>
+  <label for="address">Address</label>
+  <textarea name="address" id="address" rows="3" required></textarea>
 
-        <label for="telephone">Phone Number</label>
-        <input type="tel" id="telephone" name="telephone" required>
+  <label for="radius">Search Radius (km)</label>
+  <input type="range" id="radius" name="radius" min="1" max="100">
+  <small>Defines the search radius for a treatment location.</small>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
+  <label for="bankinfo">Bank Transfer Information (12-digit)</label>
+  <input type="text" id="bankinfo" name="bankinfo" maxlength="12" pattern="\\d{12}" required>
 
-        <label for="dob">Date of Birth</label>
-        <input type="date" id="dob" name="dob" required>
+  <input type="submit" value="Submit">
+</form>
 
-        <label for="bank">12-digit Bank Transfer Reference</label>
-        <input type="text" id="bank" name="bank" placeholder="e.g. 123456789012" required>
-        <div id="bank-error" class="error">Bank reference must be exactly 12 digits.</div>
+<div class="footer">
+  <p>Contact | Impress | © 2025 Sanvartis Inc. All rights reserved.</p>
+</div>
 
-        <button class="submit-btn" type="submit">Submit & Verify</button>
-      </form>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <a href="#">Contact</a>
-    <a href="#">Impress</a>
-    <span>© 2025 Sanvartis Inc. All rights reserved.</span>
-  </footer>
-
-  <!-- Success Popup -->
-  <div id="successPopup">
-    <div class="popup-content">
-      <h2>✔️ Submission was successful!</h2>
-      <p>Thank you. Your information has been submitted successfully.</p>
-    </div>
+<!-- Overlay for success message -->
+<div id="overlay" class="overlay" style="display: none;">
+  <div class="success-message">
+    Submission was successful. Thank you!
   </div>
+</div>
 
-  <!-- JavaScript -->
 <script>
   // Prefill form from API
   window.addEventListener('DOMContentLoaded', async () => {
@@ -266,7 +173,6 @@
     }
   });
 </script>
-
 
 </body>
 </html>
