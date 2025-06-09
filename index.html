@@ -218,30 +218,60 @@
   </div>
 
   <!-- JavaScript -->
-  <script>
-    const form = document.getElementById('sanvartisForm');
-    const bankInput = document.getElementById('bank');
-    const errorDiv = document.getElementById('bank-error');
-    const formContainer = document.getElementById('formContainer');
-    const successPopup = document.getElementById('successPopup');
+<script>
+  // Prefill data for customerid = 1
+  window.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const res = await fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1');
+      const data = await res.json();
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
+      document.getElementById('Username').value = data.Username || '';
+      document.getElementById('PhoneNumber').value = data.PhoneNumber || '';
+      document.getElementById('Email').value = data.Email || '';
+      document.getElementById('MedicalConcern').value = data.MedicalConcern || '';
+      document.getElementById('Urgency').value = data.Urgency || 'Regular Urgency';
+      document.getElementById('language').value = data.language || 'English';
+      document.getElementById('Address').value = data.Address || '';
+      document.getElementById('BirthData').value = data.BirthData?.substring(0, 10) || '';
+      document.getElementById('SearchRadius').value = data.SearchRadius || 10;
+      document.getElementById('BankTransfer').value = data.BankTransfer?.toString().padStart(12, '0') || '';
+    } catch (err) {
+      console.error('Failed to fetch user data:', err);
+    }
+  });
 
-      const bankValue = bankInput.value.trim();
+  // Form submission
+  document.getElementById('customerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      if (!/^\d{12}$/.test(bankValue)) {
-        errorDiv.style.display = 'block';
-        bankInput.focus();
+    const bankVal = document.getElementById('BankTransfer').value;
+    if (!/^\d{12}$/.test(bankVal)) {
+      alert('Bank transfer information must be exactly 12 digits.');
+      return;
+    }
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    data.costumerid = "1";
+
+    try {
+      const res = await fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        document.getElementById('customerForm').style.display = 'none';
+        document.getElementById('overlay').style.display = 'flex';
       } else {
-        errorDiv.style.display = 'none';
-        form.reset();
-        document.getElementById('range-value').textContent = '10 km';
-        formContainer.remove(); // completely remove form from DOM
-        successPopup.style.display = 'flex'; // show success message
+        alert('❌ Submission failed.');
       }
-    });
-  </script>
+    } catch (err) {
+      alert('🚨 Error: ' + err.message);
+    }
+  });
+</script>
 
 </body>
 </html>
