@@ -257,22 +257,23 @@
       costumerid: "1"
     };
 
-    try {
-      const res = await fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+try {
+  const res = await fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
 
-      if (res.ok) {
-        document.getElementById('formContainer').style.display = 'none';
-        document.getElementById('successPopup').style.display = 'flex';
-      } else {
-        alert("❌ Submission failed.");
-      }
-    } catch (err) {
-      alert("🚨 Error: " + err.message);
-    }
+  if (res.ok) {
+    document.getElementById('formContainer').style.display = 'none';
+    document.getElementById('successPopup').style.display = 'flex';
+  } else {
+    alert("❌ Submission failed.");
+  }
+} catch (err) {
+  alert("🚨 Error: " + err.message);
+}
+
   });
 </script>
 
