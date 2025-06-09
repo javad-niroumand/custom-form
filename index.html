@@ -219,14 +219,14 @@
 
   <!-- JavaScript -->
 <script>
-  // Prefill just 3 fields: fullname, phonenumber, intent
+  // Prefill just 3 fields: name, telephone, intent
   window.addEventListener('DOMContentLoaded', async () => {
     try {
       const res = await fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1');
       const user = await res.json();
 
-      document.getElementById('fullname').value = user.Username || '';
-      document.getElementById('phonenumber').value = user.PhoneNumber || '';
+      document.getElementById('name').value = user.Username || '';
+      document.getElementById('telephone').value = user.PhoneNumber || '';
       document.getElementById('intent').value = user.MedicalConcern || '';
     } catch (err) {
       console.error('Error fetching prefill data:', err);
@@ -234,25 +234,25 @@
   });
 
   // Handle form submission
-  document.getElementById('customForm').addEventListener('submit', async function(e) {
+  document.getElementById('sanvartisForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const bankVal = document.getElementById('bankinfo').value;
+    const bankVal = document.getElementById('bank').value;
     if (!/^\d{12}$/.test(bankVal)) {
-      alert("Bank transfer information must be exactly 12 digits.");
+      document.getElementById('bank-error').style.display = 'block';
       return;
+    } else {
+      document.getElementById('bank-error').style.display = 'none';
     }
 
     const data = {
-      Username: document.getElementById('fullname').value,
-      PhoneNumber: document.getElementById('phonenumber').value,
+      Username: document.getElementById('name').value,
+      PhoneNumber: document.getElementById('telephone').value,
       Email: document.getElementById('email').value,
       MedicalConcern: document.getElementById('intent').value,
-      Urgency: document.getElementById('urgency').value,
-      language: document.getElementById('language').value,
       Address: document.getElementById('address').value,
       SearchRadius: document.getElementById('radius').value,
-      BirthData: document.getElementById('birthdate').value,
+      BirthData: document.getElementById('dob').value,
       BankTransfer: Number(bankVal),
       costumerid: "1"
     };
@@ -265,8 +265,8 @@
       });
 
       if (res.ok) {
-        document.getElementById('customForm').style.display = 'none';
-        document.getElementById('overlay').style.display = 'flex';
+        document.getElementById('formContainer').style.display = 'none';
+        document.getElementById('successPopup').style.display = 'flex';
       } else {
         alert("❌ Submission failed.");
       }
@@ -275,6 +275,7 @@
     }
   });
 </script>
+
 
 
 </body>
