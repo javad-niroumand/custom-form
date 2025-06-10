@@ -193,9 +193,9 @@
         <label for="dob">Date of Birth</label>
         <input type="date" id="dob" name="dob" required>
 
-        <label for="bank">12-digit Bank Transfer Reference</label>
+        <label for="bank">12-digit Referral</label>
         <input type="text" id="bank" name="bank" placeholder="e.g. 123456789012" required>
-        <div id="bank-error" class="error">Bank reference must be exactly 12 digits.</div>
+        <div id="bank-error" class="error">referral must be exactly 12 digits.</div>
 
         <button class="submit-btn" type="submit">Submit & Verify</button>
       </form>
@@ -253,7 +253,7 @@
       Address: document.getElementById('address').value,
       SearchRadius: document.getElementById('radius').value,
       BirthData: document.getElementById('dob').value,
-      BankTransfer: Number(bankVal),
+      Referral: Number(bankVal),
       costumerid: "1"
     };
 
