@@ -4,15 +4,15 @@
   <meta charset="UTF-8" />
   <title>Sanvartis Form</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      color: #fff;
-      background: linear-gradient(to bottom, #4a4642, #1f1e1e);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  color: #222; /* Dark text globally */
+  background-color: #f4f4f4; /* Light background */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
     header {
       background-color: #ffffff;
@@ -27,21 +27,23 @@
     }
 
     main {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 20px;
-    }
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #f4f4f4; /* Match background */
+}
 
-    .form-container {
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 40px;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 450px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    }
+.form-container {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  color: #222;
+}
 
     h2 {
       text-align: center;
@@ -50,47 +52,46 @@
       color: #f5b126;
     }
 
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #222;
+}
 
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: none;
-      background-color: #333;
-      color: #fff;
-    }
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #000;
+}
 
-    input[type="range"] {
-      width: 100%;
-      margin-top: 10px;
-    }
+input::placeholder {
+  color: #888;
+}
+    
+.range-value {
+  margin-top: 5px;
+  text-align: right;
+  color: #f5b126;
+  font-weight: bold;
+}
 
-    .range-value {
-      margin-top: 5px;
-      text-align: right;
-      color: #f5b126;
-      font-weight: bold;
-    }
+.hint {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
 
-    .hint {
-      font-size: 12px;
-      color: #ccc;
-      margin-top: 4px;
-    }
-
-    .error {
-      color: #ff4444;
-      font-size: 13px;
-      display: none;
-      margin-top: 5px;
-    }
-
+.error {
+  color: #ff4444;
+  font-size: 13px;
+  display: none;
+  margin-top: 5px;
+}
     .submit-btn {
       margin-top: 25px;
       width: 100%;
@@ -107,23 +108,24 @@
       background-color: #e0a31e;
     }
 
-    footer {
-      background-color: #1f1e1e;
-      color: #ccc;
-      text-align: center;
-      padding: 15px 10px;
-      font-size: 14px;
-    }
+footer {
+  background-color: #eaeaea;
+  color: #555;
+  text-align: center;
+  padding: 15px 10px;
+  font-size: 14px;
+}
 
-    footer a {
-      color: #ccc;
-      text-decoration: none;
-      margin: 0 10px;
-    }
+footer a {
+  color: #555;
+  text-decoration: none;
+  margin: 0 10px;
+}
 
-    footer a:hover {
-      text-decoration: underline;
-    }
+footer a:hover {
+  text-decoration: underline;
+}
+
 
     /* Success popup */
     #successPopup {
