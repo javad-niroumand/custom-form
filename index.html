@@ -91,6 +91,21 @@
       margin-top: 5px;
     }
 
+    input[type="file"] {
+      margin-top: 10px;
+      color: #fff;
+      background-color: #333;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    #file-preview {
+      margin-top: 10px;
+      color: #f5b126;
+      font-size: 14px;
+    }
+
     .submit-btn {
       margin-top: 25px;
       width: 100%;
@@ -125,7 +140,6 @@
       text-decoration: underline;
     }
 
-    /* Success popup */
     #successPopup {
       display: none;
       position: fixed;
@@ -159,12 +173,10 @@
 </head>
 <body>
 
-  <!-- Logo -->
   <header>
     <img src="logo.png" alt="Sanvartis Logo">
   </header>
 
-  <!-- Main Form -->
   <main>
     <div class="form-container" id="formContainer">
       <h2>Submit Your Request</h2>
@@ -193,23 +205,25 @@
         <label for="dob">Date of Birth</label>
         <input type="date" id="dob" name="dob" required>
 
-        <label for="bank">12-digit Referral</label>
+        <label for="bank">12-digit Bank Transfer Reference</label>
         <input type="text" id="bank" name="bank" placeholder="e.g. 123456789012" required>
-        <div id="bank-error" class="error">referral must be exactly 12 digits.</div>
+        <div id="bank-error" class="error">Bank reference must be exactly 12 digits.</div>
+
+        <label for="bank-doc">Upload Bank Transfer Document</label>
+        <input type="file" id="bank-doc" accept=".jpg,.jpeg,.png,.pdf" />
+        <div id="file-preview" class="hint">No file selected.</div>
 
         <button class="submit-btn" type="submit">Submit & Verify</button>
       </form>
     </div>
   </main>
 
-  <!-- Footer -->
   <footer>
     <a href="#">Contact</a>
     <a href="#">Impress</a>
     <span>© 2025 Sanvartis Inc. All rights reserved.</span>
   </footer>
 
-  <!-- Success Popup -->
   <div id="successPopup">
     <div class="popup-content">
       <h2>✔️ Submission was successful!</h2>
@@ -217,67 +231,59 @@
     </div>
   </div>
 
-  <!-- JavaScript -->
-<script>
-  // Prefill just 3 fields: name, telephone, intent
-  window.addEventListener('DOMContentLoaded', async () => {
-    try {
-      const res = await fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1');
-      const user = await res.json();
+  <script>
+    // Prefill example (you can remove if not using mock API)
+    window.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1');
+        const user = await res.json();
+        document.getElementById('name').value = user.Username || '';
+        document.getElementById('telephone').value = user.PhoneNumber || '';
+        document.getElementById('intent').value = user.MedicalConcern || '';
+      } catch (err) {
+        console.error('Error fetching prefill data:', err);
+      }
+    });
 
-      document.getElementById('name').value = user.Username || '';
-      document.getElementById('telephone').value = user.PhoneNumber || '';
-      document.getElementById('intent').value = user.MedicalConcern || '';
-    } catch (err) {
-      console.error('Error fetching prefill data:', err);
-    }
-  });
+    // File preview handler
+    document.getElementById('bank-doc').addEventListener('change', function () {
+      const file = this.files[0];
+      const preview = document.getElementById('file-preview');
 
-  // Handle form submission
-  document.getElementById('sanvartisForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
+      if (!file) {
+        preview.textContent = "No file selected.";
+        return;
+      }
 
-    const bankVal = document.getElementById('bank').value;
-    if (!/^\d{12}$/.test(bankVal)) {
-      document.getElementById('bank-error').style.display = 'block';
-      return;
-    } else {
-      document.getElementById('bank-error').style.display = 'none';
-    }
+      if (file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          preview.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-width: 100%; margin-top: 10px; border-radius: 5px;">`;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.textContent = `Selected file: ${file.name}`;
+      }
+    });
 
-    const data = {
-      Username: document.getElementById('name').value,
-      PhoneNumber: document.getElementById('telephone').value,
-      Email: document.getElementById('email').value,
-      MedicalConcern: document.getElementById('intent').value,
-      Address: document.getElementById('address').value,
-      SearchRadius: document.getElementById('radius').value,
-      BirthData: document.getElementById('dob').value,
-      Referral: Number(bankVal),
-      costumerid: "1"
-    };
+    // Basic form validation (mock)
+    document.getElementById('sanvartisForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const bankVal = document.getElementById('bank').value;
+      const errorMsg = document.getElementById('bank-error');
 
-try {
-  const res = await fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  });
+      if (!/^\d{12}$/.test(bankVal)) {
+        errorMsg.style.display = 'block';
+        return;
+      } else {
+        errorMsg.style.display = 'none';
+      }
 
-  if (res.ok) {
-    document.getElementById('formContainer').style.display = 'none';
-    document.getElementById('successPopup').style.display = 'flex';
-  } else {
-    alert("❌ Submission failed.");
-  }
-} catch (err) {
-  alert("🚨 Error: " + err.message);
-}
-
-  });
-</script>
-
-
+      // Show popup (mock only, no API post)
+      document.getElementById('sanvartisForm').style.display = 'none';
+      document.getElementById('successPopup').style.display = 'flex';
+    });
+  </script>
 
 </body>
 </html>
