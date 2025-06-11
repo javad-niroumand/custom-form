@@ -166,11 +166,12 @@ input[type="file"] {
   border: none;
 }
 
-#file-preview {
+#file-preview img {
+  max-width: 100%;
   margin-top: 10px;
-  color: #f5b126;
-  font-size: 14px;
+  border-radius: 5px;
 }
+
 
   </style>
 </head>
@@ -214,10 +215,11 @@ input[type="file"] {
         <input type="text" id="bank" name="bank" placeholder="e.g. 123456789012" required>
         <div id="bank-error" class="error">referral must be exactly 12 digits.</div>
 
-        <!-- Add this inside your form, just after the 12-digit Referral input -->
-      <label for="bank-doc">Upload Referral Document</label>
-      <input type="file" id="bank-doc" accept=".jpg,.jpeg,.png,.pdf" />
-      <div id="file-preview" class="hint">No file selected.</div>
+<label for="bank-doc">Upload Referral Document (optional)</label>
+<input type="file" id="bank-doc" accept=".jpg,.jpeg,.png,.pdf" />
+<div id="file-preview" class="hint">No file selected.</div>
+<button type="button" id="delete-file" style="display:none; margin-top:10px; background:#ff4444; color:white; border:none; padding:8px 12px; border-radius:5px; cursor:pointer;">❌ Delete File</button>
+
 
 
         <button class="submit-btn" type="submit">Submit & Verify</button>
@@ -298,26 +300,38 @@ try {
 }
 
   });
-  // Add this inside your <script> tag at the bottom
-document.getElementById('bank-doc').addEventListener('change', function () {
+const fileInput = document.getElementById('bank-doc');
+const preview = document.getElementById('file-preview');
+const deleteBtn = document.getElementById('delete-file');
+
+fileInput.addEventListener('change', function () {
   const file = this.files[0];
-  const preview = document.getElementById('file-preview');
 
   if (!file) {
     preview.textContent = "No file selected.";
+    deleteBtn.style.display = "none";
     return;
   }
+
+  deleteBtn.style.display = "inline-block";
 
   if (file.type.startsWith("image/")) {
     const reader = new FileReader();
     reader.onload = function (e) {
-      preview.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-width: 100%; margin-top: 10px; border-radius: 5px;">`;
+      preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
     };
     reader.readAsDataURL(file);
   } else {
     preview.textContent = `Selected file: ${file.name}`;
   }
 });
+
+deleteBtn.addEventListener('click', () => {
+  fileInput.value = "";
+  preview.textContent = "No file selected.";
+  deleteBtn.style.display = "none";
+});
+
 
 </script>
 
