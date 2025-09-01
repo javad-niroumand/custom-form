@@ -131,7 +131,7 @@ footer a:hover {
 <body>
 
   <header>
-    <img src="https://www.wuerth.com/system/layout_wl2bootstrap/bootstrap_system_images/svg_logos/wuerth_group_logo_svg.svg">
+    <img src="https://www.wuerth.com/system/layout_wl2bootstrap/bootstrap_system_images/svg_logos/wuerth_group_logo_svg.svg" alt="WOW Würth Logo">
     <h1>Die WOW! Würth Online World</h1>
   </header>
 
@@ -157,5 +157,98 @@ footer a:hover {
         <label for="ansprechpartner">Ansprechpartner</label>
         <input type="text" id="ansprechpartner" name="ansprechpartner" required>
 
-        <label for="telefon">Telefonnummer des Ansprechpartners für Rückrufe</label>
-        <input type="tel" id="telef
+        <label for="telefonpartner">Telefonnummer des Ansprechpartners für Rückrufe</label>
+        <input type="tel" id="telefonpartner" name="telefonpartner" required>
+
+        <label for="emailpartner">Emailadresse des Ansprechpartners für Rückmeldungen</label>
+        <input type="email" id="emailpartner" name="emailpartner" required>
+
+        <label for="anliegen">Anliegen des Kunden</label>
+        <textarea id="anliegen" name="anliegen" required></textarea>
+
+        <button class="submit-btn" type="submit">Absenden</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <a href="#">Kontakt</a>
+    <a href="#">Impressum</a>
+    <span>© 2025 Die WOW! Würth Online World</span>
+  </footer>
+
+  <div id="successPopup">
+    <div class="popup-content">
+      <h2>✔️ Erfolgreich gesendet!</h2>
+      <p>Vielen Dank. Ihre Anfrage wurde übermittelt.</p>
+    </div>
+  </div>
+
+  <script>
+  const apiUrl = "https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1";
+
+  // Prefill mit costumerid=1
+  window.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const res = await fetch(apiUrl);
+      if (!res.ok) return;
+      const user = await res.json();
+
+      document.getElementById('kundennummer').value = user.Kundennummer || '';
+      document.getElementById('firma').value = user.Firmenname || '';
+      if (user.Address) {
+        const [strasse, plzOrt] = user.Address.split(',');
+        if (strasse) document.getElementById('strasse').value = strasse.trim();
+        if (plzOrt) {
+          const parts = plzOrt.trim().split(' ');
+          document.getElementById('plz').value = parts[0] || '';
+          document.getElementById('ort').value = parts.slice(1).join(' ') || '';
+        }
+      }
+      document.getElementById('ansprechpartner').value = user.Anspruchspartner || '';
+      document.getElementById('telefonpartner').value = user.Telefonnummer_Partner || '';
+      document.getElementById('emailpartner').value = user.Email_Partner || '';
+      document.getElementById('anliegen').value = user.Anliegen || '';
+    } catch (err) {
+      console.error("Prefill error:", err);
+    }
+  });
+
+  // Formular absenden (PUT Update + submit=true)
+  document.getElementById('wowForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const data = {
+      Kundennummer: document.getElementById('kundennummer').value,
+      Firmenname: document.getElementById('firma').value,
+      Address: document.getElementById('strasse').value + ", " + 
+               document.getElementById('plz').value + " " + 
+               document.getElementById('ort').value,
+      Ansprechpartner: document.getElementById('ansprechpartner').value,
+      Telefonnummer_Partner: document.getElementById('telefonpartner').value,
+      Email_Partner: document.getElementById('emailpartner').value,
+      Anliegen: document.getElementById('anliegen').value,
+      submit: true
+    };
+
+    try {
+      const res = await fetch(apiUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        document.getElementById('formContainer').style.display = 'none';
+        document.getElementById('successPopup').style.display = 'flex';
+      } else {
+        alert("❌ Übermittlung fehlgeschlagen.");
+      }
+    } catch (err) {
+      alert("🚨 Fehler: " + err.message);
+    }
+  });
+  </script>
+
+</body>
+</html>
