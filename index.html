@@ -2,233 +2,199 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Die WOW! Würth Online World</title>
+  <title>Zurückruf Bestätigung</title>
   <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  color: #222;
-  background-color: #f4f4f4;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: #222;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-header {
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 15px 0;
-}
+    header {
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px 0;
+    }
 
-header img {
-  height: 50px;
-  margin-bottom: 5px;
-}
+    header img {
+      height: 50px;
+      margin-bottom: 5px;
+    }
 
-header h1 {
-  font-size: 20px;
-  color: #f5b126;
-  margin: 0;
-}
+    header h1 {
+      font-size: 22px;
+      color: #f5b126;
+      margin: 0;
+    }
 
-main {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 20px;
-}
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
 
-.form-container {
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.15);
-}
+    .form-container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    }
 
-h2 {
-  text-align: center;
-  margin-top: 0;
-  font-size: 22px;
-  color: #f5b126;
-}
+    h2 {
+      text-align: center;
+      margin-top: 0;
+      font-size: 20px;
+      color: #f5b126;
+    }
 
-label {
-  display: block;
-  margin-top: 15px;
-  font-weight: bold;
-}
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
 
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
 
-textarea {
-  resize: vertical;
-  min-height: 80px;
-}
+    input[readonly] {
+      background-color: #eee;
+      cursor: not-allowed;
+    }
 
-.submit-btn {
-  margin-top: 25px;
-  width: 100%;
-  background-color: #f5b126;
-  color: #000;
-  font-weight: bold;
-  padding: 12px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.submit-btn:hover {
-  background-color: #e0a31e;
-}
+    .submit-btn {
+      margin-top: 25px;
+      width: 100%;
+      background-color: #f5b126;
+      color: #000;
+      font-weight: bold;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .submit-btn:hover {
+      background-color: #e0a31e;
+    }
 
-footer {
-  background-color: #eaeaea;
-  color: #555;
-  text-align: center;
-  padding: 15px 10px;
-  font-size: 14px;
-}
-footer a {
-  color: #555;
-  text-decoration: none;
-  margin: 0 10px;
-}
-footer a:hover {
-  text-decoration: underline;
-}
+    footer {
+      background-color: #eaeaea;
+      color: #555;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 14px;
+    }
 
-#successPopup {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(0,0,0,0.6);
-  z-index: 9999;
-  justify-content: center;
-  align-items: center;
-}
-#successPopup .popup-content {
-  background: white;
-  padding: 30px 40px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
-  max-width: 90%;
-}
-#successPopup h2 { color: #28a745; }
+    #successPopup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.6);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+    #successPopup .popup-content {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      max-width: 90%;
+    }
+    #successPopup h2 { color: #28a745; }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="https://www.wuerth.com/system/layout_wl2bootstrap/bootstrap_system_images/svg_logos/wuerth_group_logo_svg.svg" alt="WOW Würth Logo">
-    <h1>Die WOW! Würth Online World</h1>
+    <img src="https://s3-eu-west-1.amazonaws.com/tpd/logos/64105febeb9d6a9d98a66f24/0x0.png" alt="WOW Würth Logo">
+    <h1>Zurückruf Bestätigung</h1>
   </header>
 
   <main>
     <div class="form-container" id="formContainer">
-      <h2>Kundenanfrage</h2>
-      <form id="wowForm">
-        <label for="kundennummer">Kundennummer (wenn vorhanden)</label>
-        <input type="text" id="kundennummer" name="kundennummer">
+      <h2>Kundendaten</h2>
+      <form id="callbackForm">
+        <label for="username">Name</label>
+        <input type="text" id="username" name="username" readonly>
 
-        <label for="firma">Firmenname</label>
-        <input type="text" id="firma" name="firma" required>
+        <label for="telefon">Telefonnummer</label>
+        <input type="tel" id="telefon" name="telefon" required>
 
-        <label for="strasse">Straße</label>
-        <input type="text" id="strasse" name="strasse" required>
+        <label for="calldate">Datum des Rückrufs</label>
+        <input type="date" id="calldate" name="calldate" required>
 
-        <label for="plz">PLZ</label>
-        <input type="text" id="plz" name="plz" required>
+        <label for="calltime">Uhrzeit des Rückrufs</label>
+        <input type="time" id="calltime" name="calltime" required>
 
-        <label for="ort">Ort</label>
-        <input type="text" id="ort" name="ort" required>
-
-        <label for="ansprechpartner">Ansprechpartner</label>
-        <input type="text" id="ansprechpartner" name="ansprechpartner" required>
-
-        <label for="telefonpartner">Telefonnummer des Ansprechpartners für Rückrufe</label>
-        <input type="tel" id="telefonpartner" name="telefonpartner" required>
-
-        <label for="emailpartner">Emailadresse des Ansprechpartners für Rückmeldungen</label>
-        <input type="email" id="emailpartner" name="emailpartner" required>
-
-        <label for="anliegen">Anliegen des Kunden</label>
-        <textarea id="anliegen" name="anliegen" required></textarea>
-
-        <button class="submit-btn" type="submit">Absenden</button>
+        <button class="submit-btn" type="submit">Änderungen speichern</button>
       </form>
     </div>
   </main>
 
   <footer>
-    <a href="#">Kontakt</a>
-    <a href="#">Impressum</a>
-    <span>© 2025 Die WOW! Würth Online World</span>
+    <p>Vielen Dank für Ihre Zeit, wir sind immer für Sie da. Unsere 24h Supportnummer lautet: xxxxxxxxxx</p>
   </footer>
 
   <div id="successPopup">
     <div class="popup-content">
-      <h2>✔️ Erfolgreich gesendet!</h2>
-      <p>Vielen Dank. Ihre Anfrage wurde übermittelt.</p>
+      <h2>✔️ Änderungen gespeichert!</h2>
+      <p>Vielen Dank. Ihre Daten wurden aktualisiert.</p>
     </div>
   </div>
 
   <script>
   const apiUrl = "https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1";
 
-  // Prefill mit costumerid=1
+  // Prefill Daten laden
   window.addEventListener('DOMContentLoaded', async () => {
     try {
       const res = await fetch(apiUrl);
       if (!res.ok) return;
       const user = await res.json();
 
-      document.getElementById('kundennummer').value = user.Kundennummer || '';
-      document.getElementById('firma').value = user.Firmenname || '';
-      if (user.Address) {
-        const [strasse, plzOrt] = user.Address.split(',');
-        if (strasse) document.getElementById('strasse').value = strasse.trim();
-        if (plzOrt) {
-          const parts = plzOrt.trim().split(' ');
-          document.getElementById('plz').value = parts[0] || '';
-          document.getElementById('ort').value = parts.slice(1).join(' ') || '';
+      document.getElementById('username').value = user.Username || '';
+      document.getElementById('telefon').value = user.PhoneNumber || '';
+      if (user.CallDate) {
+        const parts = user.CallDate.split('/');
+        if (parts.length === 3) {
+          const isoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+          document.getElementById('calldate').value = isoDate;
         }
       }
-      document.getElementById('ansprechpartner').value = user.Anspruchspartner || '';
-      document.getElementById('telefonpartner').value = user.Telefonnummer_Partner || '';
-      document.getElementById('emailpartner').value = user.Email_Partner || '';
-      document.getElementById('anliegen').value = user.Anliegen || '';
+      document.getElementById('calltime').value = user.CallTime || '';
     } catch (err) {
       console.error("Prefill error:", err);
     }
   });
 
-  // Formular absenden (PUT Update + submit=true)
-  document.getElementById('wowForm').addEventListener('submit', async function(e) {
+  // Änderungen speichern
+  document.getElementById('callbackForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
+    const dateParts = document.getElementById('calldate').value.split('-');
+    const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+
     const data = {
-      Kundennummer: document.getElementById('kundennummer').value,
-      Firmenname: document.getElementById('firma').value,
-      Address: document.getElementById('strasse').value + ", " + 
-               document.getElementById('plz').value + " " + 
-               document.getElementById('ort').value,
-      Ansprechpartner: document.getElementById('ansprechpartner').value,
-      Telefonnummer_Partner: document.getElementById('telefonpartner').value,
-      Email_Partner: document.getElementById('emailpartner').value,
-      Anliegen: document.getElementById('anliegen').value,
-      submit: true
+      PhoneNumber: document.getElementById('telefon').value,
+      CallDate: formattedDate,
+      CallTime: document.getElementById('calltime').value
     };
 
     try {
@@ -242,7 +208,7 @@ footer a:hover {
         document.getElementById('formContainer').style.display = 'none';
         document.getElementById('successPopup').style.display = 'flex';
       } else {
-        alert("❌ Übermittlung fehlgeschlagen.");
+        alert("❌ Änderungen konnten nicht gespeichert werden.");
       }
     } catch (err) {
       alert("🚨 Fehler: " + err.message);
