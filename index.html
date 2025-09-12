@@ -91,6 +91,14 @@
       background-color: #e0a31e;
     }
 
+    #cancelBtn {
+      background-color: #dc3545;
+      margin-top: 10px;
+    }
+    #cancelBtn:hover {
+      background-color: #c82333;
+    }
+
     .thank-message {
       margin-top: 20px;
       font-weight: bold;
@@ -124,6 +132,19 @@
       max-width: 90%;
     }
     #successPopup h2 { color: #28a745; }
+    #closePopup {
+      background-color: #f5b126;
+      color: #000;
+      font-weight: bold;
+      margin-top: 15px;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #closePopup:hover {
+      background-color: #e0a31e;
+    }
   </style>
 </head>
 <body>
@@ -141,7 +162,7 @@
         <input type="text" id="username" name="username" readonly>
 
         <label for="telefon">Telefonnummer</label>
-        <input type="tel" id="telefon" name="telefon" required>
+        <input type="tel" id="telefon" name="telefon" required pattern="^(\+49|0)[0-9]{9,12}$" title="Bitte geben Sie eine gültige Telefonnummer ein">
 
         <label for="calldate">Datum des Rückrufs</label>
         <input type="date" id="calldate" name="calldate" required>
@@ -150,6 +171,7 @@
         <input type="time" id="calltime" name="calltime" required>
 
         <button class="submit-btn" type="submit">Änderungen speichern</button>
+        <button class="submit-btn" type="button" id="cancelBtn">Meeting abbrechen</button>
 
         <p class="thank-message">
           Vielen Dank für Ihre Zeit, wir sind immer für Sie da.<br>
@@ -160,13 +182,14 @@
   </main>
 
   <footer>
-    <span>© 2025 Die 1KOMMA5° </span>
+    <span>© 2025 Die 1KOMMA5°</span>
   </footer>
 
   <div id="successPopup">
     <div class="popup-content">
-      <h2>✔️ Änderungen gespeichert!</h2>
-      <p>Vielen Dank. Ihre Daten wurden aktualisiert.</p>
+      <h2></h2>
+      <p></p>
+      <button id="closePopup">Schließen</button>
     </div>
   </div>
 
@@ -192,7 +215,24 @@
       document.getElementById('calltime').value = user.CallTime || '';
     } catch (err) {
       console.error("Prefill error:", err);
+      alert("Daten konnten nicht geladen werden. Bitte versuchen Sie es später erneut.");
     }
+  });
+
+  // Reusable popup function
+  function showPopup(title, message, color) {
+    const popup = document.getElementById('successPopup');
+    popup.style.display = 'flex';
+    popup.querySelector('h2').textContent = title;
+    popup.querySelector('h2').style.color = color;
+    popup.querySelector('p').textContent = message;
+    document.getElementById('formContainer').style.display = 'none';
+  }
+
+  // Close popup button
+  document.getElementById('closePopup').addEventListener('click', () => {
+    document.getElementById('successPopup').style.display = 'none';
+    document.getElementById('formContainer').style.display = 'flex';
   });
 
   // Änderungen speichern
@@ -216,10 +256,41 @@
       });
 
       if (res.ok) {
-        document.getElementById('formContainer').style.display = 'none';
-        document.getElementById('successPopup').style.display = 'flex';
+        showPopup("✔️ Änderungen gespeichert!", "Vielen Dank. Ihre Daten wurden aktualisiert.", "#28a745");
       } else {
         alert("❌ Änderungen konnten nicht gespeichert werden.");
+      }
+    } catch (err) {
+      alert("🚨 Fehler: " + err.message);
+    }
+  });
+
+  // Meeting abbrechen
+  document.getElementById('cancelBtn').addEventListener('click', async () => {
+    const confirmCancel = confirm("⚠️ Sind Sie sicher, dass Sie das Meeting abbrechen möchten?");
+    if (!confirmCancel) return;
+
+    // Clear date and time
+    document.getElementById('calldate').value = '';
+    document.getElementById('calltime').value = '';
+
+    const data = {
+      PhoneNumber: document.getElementById('telefon').value,
+      CallDate: '',
+      CallTime: ''
+    };
+
+    try {
+      const res = await fetch(apiUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        showPopup("❌ Meeting abgebrochen!", "Der Rückruf wurde erfolgreich gelöscht.", "#dc3545");
+      } else {
+        alert("❌ Das Meeting konnte nicht abgebrochen werden.");
       }
     } catch (err) {
       alert("🚨 Fehler: " + err.message);
@@ -229,4 +300,3 @@
 
 </body>
 </html>
-
