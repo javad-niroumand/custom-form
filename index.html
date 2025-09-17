@@ -29,7 +29,7 @@
 
     header h1 {
       font-size: 22px;
-      color: #f5b126;
+      color: black; /* updated */
       margin: 0;
     }
 
@@ -39,6 +39,7 @@
       justify-content: center;
       align-items: center;
       padding: 40px 20px;
+      flex-direction: column;
     }
 
     .form-container {
@@ -48,13 +49,14 @@
       width: 100%;
       max-width: 500px;
       box-shadow: 0 0 15px rgba(0,0,0,0.15);
+      margin-bottom: 20px;
     }
 
     h2 {
       text-align: center;
       margin-top: 0;
       font-size: 20px;
-      color: #f5b126;
+      color: #5c0884; /* updated */
     }
 
     label {
@@ -79,7 +81,7 @@
     .submit-btn {
       margin-top: 25px;
       width: 100%;
-      background-color: #f5b126;
+      background-color: #d795f5; /* updated */
       color: #000;
       font-weight: bold;
       padding: 12px;
@@ -88,21 +90,32 @@
       cursor: pointer;
     }
     .submit-btn:hover {
-      background-color: #e0a31e;
+      background-color: #c281e0;
     }
 
-    #cancelBtn {
-      background-color: #dc3545;
+    .cancel-btn {
       margin-top: 10px;
+      width: 100%;
+      background-color: #ff8080; /* updated */
+      color: #000;
+      font-weight: bold;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
-    #cancelBtn:hover {
-      background-color: #c82333;
+    .cancel-btn:hover {
+      background-color: #e56c6c;
     }
 
     .thank-message {
       margin-top: 20px;
       font-weight: bold;
       text-align: center;
+    }
+
+    .thank-message span {
+      color: #5c0884; /* updated */
     }
 
     footer {
@@ -132,25 +145,34 @@
       max-width: 90%;
     }
     #successPopup h2 { color: #28a745; }
-    #closePopup {
-      background-color: #f5b126;
-      color: #000;
-      font-weight: bold;
-      margin-top: 15px;
-      padding: 8px 15px;
-      border: none;
-      border-radius: 5px;
+
+    /* Banner Styling */
+    .banner {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0,0,0,0.15);
       cursor: pointer;
     }
-    #closePopup:hover {
-      background-color: #e0a31e;
+    .banner img {
+      width: 100%;
+      display: block;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 600px) {
+      header h1 { font-size: 18px; }
+      .form-container { padding: 20px; }
+      h2 { font-size: 18px; }
+      .submit-btn, .cancel-btn { padding: 10px; font-size: 14px; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="https://s3-eu-west-1.amazonaws.com/tpd/logos/64105febeb9d6a9d98a66f24/0x0.png" alt="WOW Würth Logo">
+    <img src="https://www.wuerth.com/system/layout_wl2bootstrap/bootstrap_system_images/svg_logos/wuerth_group_logo_svg.svg" alt="WOW Würth Logo">
     <h1>Zurückruf Bestätigung</h1>
   </header>
 
@@ -162,7 +184,7 @@
         <input type="text" id="username" name="username" readonly>
 
         <label for="telefon">Telefonnummer</label>
-        <input type="tel" id="telefon" name="telefon" required pattern="^(\+49|0)[0-9]{9,12}$" title="Bitte geben Sie eine gültige Telefonnummer ein">
+        <input type="tel" id="telefon" name="telefon" required>
 
         <label for="calldate">Datum des Rückrufs</label>
         <input type="date" id="calldate" name="calldate" required>
@@ -171,25 +193,29 @@
         <input type="time" id="calltime" name="calltime" required>
 
         <button class="submit-btn" type="submit">Änderungen speichern</button>
-        <button class="submit-btn" type="button" id="cancelBtn">Meeting absagen</button>
+        <button class="cancel-btn" type="button" id="cancelBtn">Gespräch absagen</button>
 
         <p class="thank-message">
           Vielen Dank für Ihre Zeit, wir sind immer für Sie da.<br>
-          Unsere 24h Supportnummer lautet: <span style="color:#f5b126;">xxxxxxxxxx</span>
+          Unsere 24h Supportnummer lautet: <span>0211-5858838-5</span>
         </p>
       </form>
     </div>
+
+    <!-- Banner -->
+    <a href="https://1komma5.com/de/heartbeat/" target="_blank" class="banner">
+      <img src="https://github.com/javad-niroumand/Lisa/blob/main/Screenshot%202025-09-17%20231416.jpg?raw=true" alt="Heartbeat AI Banner">
+    </a>
   </main>
 
   <footer>
-    <span>© 2025 Die 1KOMMA5°</span>
+    <span>© 2025 Die WOW! Würth Online World</span>
   </footer>
 
   <div id="successPopup">
     <div class="popup-content">
-      <h2></h2>
-      <p></p>
-      <button id="closePopup">Schließen</button>
+      <h2>✔️ Änderungen gespeichert!</h2>
+      <p>Vielen Dank. Ihre Daten wurden aktualisiert.</p>
     </div>
   </div>
 
@@ -215,24 +241,7 @@
       document.getElementById('calltime').value = user.CallTime || '';
     } catch (err) {
       console.error("Prefill error:", err);
-      alert("Daten konnten nicht geladen werden. Bitte versuchen Sie es später erneut.");
     }
-  });
-
-  // Reusable popup function
-  function showPopup(title, message, color) {
-    const popup = document.getElementById('successPopup');
-    popup.style.display = 'flex';
-    popup.querySelector('h2').textContent = title;
-    popup.querySelector('h2').style.color = color;
-    popup.querySelector('p').textContent = message;
-    document.getElementById('formContainer').style.display = 'none';
-  }
-
-  // Close popup button
-  document.getElementById('closePopup').addEventListener('click', () => {
-    document.getElementById('successPopup').style.display = 'none';
-    document.getElementById('formContainer').style.display = 'flex';
   });
 
   // Änderungen speichern
@@ -256,7 +265,8 @@
       });
 
       if (res.ok) {
-        showPopup("✔️ Änderungen gespeichert!", "Vielen Dank. Ihre Daten wurden aktualisiert.", "#28a745");
+        document.getElementById('formContainer').style.display = 'none';
+        document.getElementById('successPopup').style.display = 'flex';
       } else {
         alert("❌ Änderungen konnten nicht gespeichert werden.");
       }
@@ -265,12 +275,12 @@
     }
   });
 
-  // Meeting abbrechen
+  // Gespräch absagen
   document.getElementById('cancelBtn').addEventListener('click', async () => {
-    const confirmCancel = confirm("⚠️ Sind Sie sicher, dass Sie das Meeting abbrechen möchten?");
+    const confirmCancel = confirm("⚠️ Sind Sie sicher, dass Sie das Gespräch absagen möchten?");
     if (!confirmCancel) return;
 
-    // Clear date and time
+    // Clear date and time fields
     document.getElementById('calldate').value = '';
     document.getElementById('calltime').value = '';
 
@@ -288,9 +298,12 @@
       });
 
       if (res.ok) {
-        showPopup("❌ Meeting abgebrochen!", "Der Rückruf wurde erfolgreich gelöscht.", "#dc3545");
+        document.getElementById('formContainer').style.display = 'none';
+        document.getElementById('successPopup').style.display = 'flex';
+        document.getElementById('successPopup').querySelector('h2').textContent = "✔️ Gespräch abgesagt!";
+        document.getElementById('successPopup').querySelector('p').textContent = "Der Rückruf wurde erfolgreich gelöscht.";
       } else {
-        alert("❌ Das Meeting konnte nicht abgebrochen werden.");
+        alert("❌ Das Gespräch konnte nicht abgesagt werden.");
       }
     } catch (err) {
       alert("🚨 Fehler: " + err.message);
@@ -300,4 +313,3 @@
 
 </body>
 </html>
-
