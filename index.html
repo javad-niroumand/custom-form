@@ -33,6 +33,7 @@ header h1{
   letter-spacing:0.5px;
 }
 
+/* Banner */
 .top-banner{
   background:var(--purple);
   padding:12px;
@@ -71,6 +72,7 @@ header h1{
 .date-item .dom{display:block;font-size:13px;font-weight:700;}
 .date-item.active{background:#fff;color:var(--purple);}
 
+/* Time */
 .time-container{
   width:100%;
   max-width:420px;
@@ -85,7 +87,7 @@ header h1{
   margin-bottom:4px;
 }
 .time-container input{
-  width:95%;
+  width:100%;
   padding:10px;
   border-radius:8px;
   border:1px solid #ccc;
@@ -93,6 +95,7 @@ header h1{
   text-align:center;
 }
 
+/* Appointment boxes */
 .appointments{
   width:100%;
   max-width:420px;
@@ -114,6 +117,7 @@ header h1{
 }
 .appointment-box p{margin:0;font-size:13px;}
 
+/* Buttons */
 .buttons{
   width:100%;
   max-width:420px;
@@ -134,6 +138,7 @@ header h1{
   font-size:16px;
 }
 
+/* Services */
 .services{
   background:#fff;
   width:100%;
@@ -169,6 +174,7 @@ header h1{
   font-size:18px;
 }
 
+/* Banner image */
 .banner-img{
   width:100%;
   max-width:420px;
@@ -248,7 +254,6 @@ function renderDates(){
     const d=new Date(year,monthIndex,new Date().getDate()+i);
     const div=document.createElement('div');
     div.className='date-item';
-    if(i===0)div.classList.add('active');
     div.innerHTML=`${d.toLocaleDateString('de-DE',{weekday:'short'})}<span class="dom">${d.getDate()}</span>`;
     div.onclick=()=>{document.querySelectorAll('.date-item').forEach(x=>x.classList.remove('active'));div.classList.add('active');};
     datesRow.appendChild(div);
@@ -266,15 +271,16 @@ window.addEventListener('DOMContentLoaded', async () => {
     const user = await res.json();
     document.getElementById('userName').textContent = user.Username || '';
     document.getElementById('userPhone').textContent = user.PhoneNumber || '';
-    // date
+
+    // remove existing active before marking API date
+    document.querySelectorAll('.date-item').forEach(el=>el.classList.remove('active'));
+
     if (user.CallDate) {
       const parts = user.CallDate.split('/');
       if (parts.length === 3) {
-        // convert dd/mm/yyyy
-        const isoDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-        // find date-item matching this day
+        const day = parts[0];
         [...datesRow.children].forEach(el=>{
-          if(el.querySelector('.dom').textContent==parts[0]){
+          if(el.querySelector('.dom').textContent==day){
             el.classList.add('active');
           }
         });
