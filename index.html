@@ -8,8 +8,6 @@
 <style>
 :root {
   --purple:#8b5cf6;
-  --light:#fff;
-  --maxWidth:360px;
 }
 body{
   margin:0;
@@ -37,7 +35,8 @@ header h1{margin:5px 0 0;font-size:18px;color:var(--purple);font-weight:600}
   flex-direction:column;
   border-radius:12px;
   color:white;
-  width:var(--maxWidth);
+  width:100%;
+  max-width:420px;
   box-sizing:border-box;
   margin:10px auto;
 }
@@ -75,7 +74,8 @@ header h1{margin:5px 0 0;font-size:18px;color:var(--purple);font-weight:600}
   font-weight:600;
   padding:10px;
   color:#333;
-  width:var(--maxWidth);
+  width:100%;
+  max-width:420px;
   box-sizing:border-box;
 }
 .clock input[type=time]{
@@ -88,7 +88,8 @@ header h1{margin:5px 0 0;font-size:18px;color:var(--purple);font-weight:600}
 
 /* Appointment boxes */
 .appointments{
-  width:var(--maxWidth);
+  width:100%;
+  max-width:420px;
   margin:5px auto;
 }
 .appointment-box{
@@ -107,7 +108,8 @@ header h1{margin:5px 0 0;font-size:18px;color:var(--purple);font-weight:600}
 
 /* Buttons */
 .buttons{
-  width:var(--maxWidth);
+  width:100%;
+  max-width:420px;
   margin:10px auto;
   text-align:center;
 }
@@ -125,7 +127,8 @@ header h1{margin:5px 0 0;font-size:18px;color:var(--purple);font-weight:600}
 
 /* Service icons */
 .service-icons{
-  width:var(--maxWidth);
+  width:100%;
+  max-width:420px;
   display:flex;
   justify-content:space-around;
   margin-top:8px;
@@ -142,7 +145,8 @@ header h1{margin:5px 0 0;font-size:18px;color:var(--purple);font-weight:600}
   font-size:20px;
 }
 .service-text{
-  width:var(--maxWidth);
+  width:100%;
+  max-width:420px;
   text-align:center;
   font-size:14px;
   font-weight:500;
@@ -152,17 +156,14 @@ header h1{margin:5px 0 0;font-size:18px;color:var(--purple);font-weight:600}
 
 /* Banner at bottom */
 .banner{
-  width:var(--maxWidth);
+  width:100%;
+  max-width:420px;
   border-radius:12px;
   overflow:hidden;
   box-shadow:0 0 15px rgba(0,0,0,0.15);
   margin:15px auto;
 }
 .banner img{width:100%;display:block;}
-
-@media (max-width:400px){
-  :root{--maxWidth:95%;}
-}
 </style>
 </head>
 <body>
@@ -201,9 +202,9 @@ header h1{margin:5px 0 0;font-size:18px;color:var(--purple);font-weight:600}
 </div>
 
 <div class="service-icons">
-  <div class="icon"><i class="fa fa-envelope"></i></div>
-  <div class="icon"><i class="fa fa-phone"></i></div>
-  <div class="icon"><i class="fa fa-whatsapp"></i></div>
+  <div class="icon"><i class="fa-solid fa-envelope"></i></div>
+  <div class="icon"><i class="fa-solid fa-phone"></i></div>
+  <div class="icon"><i class="fa-brands fa-whatsapp"></i></div>
 </div>
 <div class="service-text">
   Unser Kundenservice ist <strong>24&nbsp;Stunden</strong> für Sie erreichbar.
@@ -236,7 +237,6 @@ function renderDates(startDate=new Date()){
   }
 }
 
-// month navigation
 document.getElementById('prevMonth').onclick=()=>{
   currentBaseDate.setMonth(currentBaseDate.getMonth()-1);
   renderDates(currentBaseDate);
@@ -246,14 +246,11 @@ document.getElementById('nextMonth').onclick=()=>{
   renderDates(currentBaseDate);
 };
 
-// API prefill
 window.addEventListener('DOMContentLoaded',async()=>{
   try{
     const res=await fetch(apiUrl);
     if(!res.ok)return;
     const user=await res.json();
-
-    // base date from API
     if(user.CallDate){
       const [day,month,year]=user.CallDate.split('/');
       currentBaseDate=new Date(`${year}-${month}-${day}`);
@@ -263,7 +260,6 @@ window.addEventListener('DOMContentLoaded',async()=>{
     document.getElementById('userName').textContent=user.Username||'';
     document.getElementById('userPhone').textContent=user.PhoneNumber||'';
 
-    // highlight API date
     document.querySelectorAll('.date-item').forEach(el=>el.classList.remove('active'));
     [...datesRow.children].forEach(el=>{
       if(el.querySelector('.dom').textContent==currentBaseDate.getDate()){
@@ -274,14 +270,11 @@ window.addEventListener('DOMContentLoaded',async()=>{
   }catch(err){console.error("Prefill error:",err);}
 });
 
-// save button
 document.getElementById('saveBtn').onclick=async()=>{
-  // get selected date
   let selectedDay=document.querySelector('.date-item.active .dom')?.textContent;
   let selectedMonth=currentBaseDate.getMonth()+1;
   let selectedYear=currentBaseDate.getFullYear();
   let formattedDate=`${selectedDay}/${selectedMonth.toString().padStart(2,'0')}/${selectedYear}`;
-
   const data={
     PhoneNumber:document.getElementById('userPhone').textContent,
     CallDate:formattedDate,
@@ -293,11 +286,8 @@ document.getElementById('saveBtn').onclick=async()=>{
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify(data)
     });
-    if(res.ok){
-      alert("✔️ Rückrufdaten aktualisiert");
-    }else{
-      alert("❌ Fehler beim Speichern");
-    }
+    if(res.ok){alert("✔️ Rückrufdaten aktualisiert");}
+    else{alert("❌ Fehler beim Speichern");}
   }catch(err){alert("🚨 Fehler: "+err.message);}
 };
 </script>
