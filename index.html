@@ -6,245 +6,220 @@
 <title>Rückruf Informationen</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-  :root {
-    --purple:#8b5cf6;
-    --light:#fff;
-    --maxWidth:360px;
-  }
-  body {
-    margin:0;
-    font-family:'Segoe UI',sans-serif;
-    background:#f4f4f4;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    color:#222;
-  }
-  header {
-    background:#fff;
-    width:100%;
-    text-align:center;
-    padding:10px 0;
-  }
-  header img {height:40px;}
-  header h1 {margin:5px 0 0;font-size:18px;font-weight:600;color:var(--purple);}
+:root {
+  --purple:#8b5cf6;
+  --light:#fff;
+  --maxWidth:360px;
+}
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:#f4f4f4;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  color:#222;
+}
+header{
+  background:#fff;
+  width:100%;
+  text-align:center;
+  padding:10px 0;
+}
+header img{height:40px;}
+header h1{margin:5px 0 0;font-size:18px;color:var(--purple);font-weight:600}
 
-  /* Banner */
-  .top-banner {
-    background:var(--purple);
-    padding:12px;
-    display:flex;
-    flex-direction:column;
-    border-radius:12px;
-    color:white;
-    width:var(--maxWidth);
-    box-sizing:border-box;
-    margin:10px auto;
-  }
-  .banner-header {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-weight:600;
-    margin-bottom:8px;
-    font-size:14px;
-  }
-  .banner-header span {cursor:pointer;}
-  .dates {
-    display:flex;
-    justify-content:space-around;
-    gap:4px;
-  }
-  .date-item {
-    flex:1;
-    background:rgba(255,255,255,0.1);
-    border:1px solid rgba(255,255,255,0.3);
-    border-radius:8px;
-    text-align:center;
-    padding:4px 0;
-    font-size:11px;
-    cursor:pointer;
-  }
-  .date-item .dom {
-    display:block;
-    font-size:13px;
-    font-weight:700;
-  }
-  .date-item.active {
-    background:#fff;
-    color:var(--purple);
-  }
+/* Banner */
+.top-banner{
+  background:var(--purple);
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  border-radius:12px;
+  color:white;
+  width:var(--maxWidth);
+  box-sizing:border-box;
+  margin:10px auto;
+}
+.banner-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:600;
+  margin-bottom:8px;
+  font-size:14px;
+}
+.banner-header span{cursor:pointer;}
+.dates{
+  display:flex;
+  justify-content:space-around;
+  gap:4px;
+}
+.date-item{
+  flex:1;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.3);
+  border-radius:8px;
+  text-align:center;
+  padding:4px 0;
+  font-size:11px;
+  cursor:pointer;
+}
+.date-item .dom{display:block;font-size:13px;font-weight:700;}
+.date-item.active{background:#fff;color:var(--purple);}
 
-  /* Clock */
-  .clock {
-    text-align:center;
-    font-size:26px;
-    font-weight:600;
-    padding:10px;
-    color:#333;
-    width:var(--maxWidth);
-    box-sizing:border-box;
-  }
-  .time-picker {
-    width:var(--maxWidth);
-    text-align:center;
-    margin-bottom:10px;
-  }
-  .time-picker input {
-    width:100%;
-    padding:8px;
-    border:1px solid #ccc;
-    border-radius:6px;
-    font-size:16px;
-    text-align:center;
-  }
+/* Clock */
+.clock{
+  text-align:center;
+  font-size:22px;
+  font-weight:600;
+  padding:10px;
+  color:#333;
+  width:var(--maxWidth);
+  box-sizing:border-box;
+}
+.clock input[type=time]{
+  width:100%;
+  font-size:20px;
+  padding:6px;
+  border:1px solid #ccc;
+  border-radius:8px;
+}
 
-  /* Appointment boxes */
-  .appointments {
-    width:var(--maxWidth);
-    margin:5px auto;
-  }
-  .appointment-box {
-    background:#fff;
-    padding:12px;
-    border-radius:10px;
-    box-shadow:0 2px 6px rgba(0,0,0,0.1);
-    margin-bottom:8px;
-  }
-  .appointment-box h3 {
-    margin:0 0 3px;
-    font-size:14px;
-    color:var(--purple);
-  }
-  .appointment-box p {
-    margin:0;
-    font-size:13px;
-  }
+/* Appointment boxes */
+.appointments{
+  width:var(--maxWidth);
+  margin:5px auto;
+}
+.appointment-box{
+  background:#fff;
+  padding:12px;
+  border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom:8px;
+}
+.appointment-box h3{
+  margin:0 0 3px;
+  font-size:14px;
+  color:var(--purple);
+}
+.appointment-box p{margin:0;font-size:13px;}
 
-  /* Buttons */
-  .buttons {
-    width:var(--maxWidth);
-    margin:10px auto;
-    text-align:center;
-  }
-  .save-btn {
-    width:100%;
-    background:var(--purple);
-    color:#fff;
-    font-weight:600;
-    padding:12px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:14px;
-  }
+/* Buttons */
+.buttons{
+  width:var(--maxWidth);
+  margin:10px auto;
+  text-align:center;
+}
+.save-btn{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:var(--purple);
+  color:#fff;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+}
 
-  /* Image Banner */
-  .banner-link {
-    display:block;
-    width:var(--maxWidth);
-    margin:10px auto;
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:0 0 15px rgba(0,0,0,0.15);
-  }
-  .image-banner {
-    width:100%;
-    display:block;
-  }
+/* Service icons */
+.service-icons{
+  width:var(--maxWidth);
+  display:flex;
+  justify-content:space-around;
+  margin-top:8px;
+}
+.service-icons .icon{
+  background:var(--purple);
+  color:#fff;
+  width:50px;
+  height:50px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  font-size:20px;
+}
+.service-text{
+  width:var(--maxWidth);
+  text-align:center;
+  font-size:14px;
+  font-weight:500;
+  margin-top:6px;
+  color:#333;
+}
 
-  /* Service Icons */
-  .service-icons {
-    width:var(--maxWidth);
-    display:flex;
-    justify-content:space-around;
-    margin-top:10px;
-  }
-  .service-icons .icon {
-    background:var(--purple);
-    color:#fff;
-    width:48px;height:48px;
-    display:flex;justify-content:center;align-items:center;
-    border-radius:50%;
-    font-size:20px;
-  }
+/* Banner at bottom */
+.banner{
+  width:var(--maxWidth);
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 0 15px rgba(0,0,0,0.15);
+  margin:15px auto;
+}
+.banner img{width:100%;display:block;}
 
-  .service-text {
-    width:var(--maxWidth);
-    text-align:center;
-    font-size:14px;
-    font-weight:500;
-    color:#333;
-    margin-top:5px;
-  }
-
-  /* Responsive */
-  @media (max-width:400px){
-    :root {--maxWidth:94vw;}
-  }
+@media (max-width:400px){
+  :root{--maxWidth:95%;}
+}
 </style>
 </head>
 <body>
-  <header>
-    <img src="https://intranet.gruendungswerft.com/wp-content/uploads/2024/05/1komma5.png">
-    <h1>Rückruf&nbsp;Informationen</h1>
-  </header>
 
-  <!-- Date Banner -->
-  <div class="top-banner">
-    <div class="banner-header">
-      <span id="prevMonth"><i class="fa fa-chevron-left"></i></span>
-      <span id="monthLabel">Monat</span>
-      <span id="nextMonth"><i class="fa fa-chevron-right"></i></span>
-    </div>
-    <div class="dates" id="datesRow"></div>
+<header>
+  <img src="https://intranet.gruendungswerft.com/wp-content/uploads/2024/05/1komma5.png">
+  <h1>Rückruf Informationen</h1>
+</header>
+
+<div class="top-banner">
+  <div class="banner-header">
+    <span id="prevMonth">&lt;</span>
+    <span id="monthLabel">Monat</span>
+    <span id="nextMonth">&gt;</span>
   </div>
+  <div class="dates" id="datesRow"></div>
+</div>
 
-  <!-- Clock -->
-  <div class="clock" id="clock">--:--</div>
-  <div class="time-picker">
-    <input type="time" id="timeInput" value="09:00">
+<div class="clock">
+  <input type="time" id="timeInput">
+</div>
+
+<div class="appointments">
+  <div class="appointment-box">
+    <h3>Kunde</h3>
+    <p id="userName">–</p>
   </div>
-
-  <!-- Appointments -->
-  <div class="appointments">
-    <div class="appointment-box">
-      <h3>Name</h3>
-      <p id="userName">-</p>
-    </div>
-    <div class="appointment-box">
-      <h3>Telefonnummer</h3>
-      <p id="userPhone">-</p>
-    </div>
+  <div class="appointment-box">
+    <h3>Telefonnummer</h3>
+    <p id="userPhone">–</p>
   </div>
+</div>
 
-  <!-- Buttons -->
-  <div class="buttons">
-    <button class="save-btn" id="saveBtn">Rückruf anpassen</button>
-  </div>
+<div class="buttons">
+  <button class="save-btn" id="saveBtn">Rückruf anpassen</button>
+</div>
 
-  <!-- Image Banner -->
-  <a href="https://1komma5.com/de/heartbeat/" target="_blank" class="banner-link">
-    <img src="https://github.com/javad-niroumand/Lisa/blob/main/Screenshot%202025-09-17%20231416.jpg?raw=true"
-         alt="Heartbeat AI Banner" class="image-banner">
-  </a>
+<div class="service-icons">
+  <div class="icon"><i class="fa fa-envelope"></i></div>
+  <div class="icon"><i class="fa fa-phone"></i></div>
+  <div class="icon"><i class="fa fa-whatsapp"></i></div>
+</div>
+<div class="service-text">
+  Unser Kundenservice ist <strong>24&nbsp;Stunden</strong> für Sie erreichbar.
+</div>
 
-  <!-- Service Icons -->
-  <div class="service-icons">
-    <div class="icon"><i class="fa fa-envelope"></i></div>
-    <div class="icon"><i class="fa fa-phone"></i></div>
-    <div class="icon"><i class="fa fa-whatsapp"></i></div>
-  </div>
-  <div class="service-text">Unser Kundenservice ist 24&nbsp;Stunden für Sie erreichbar.</div>
+<a href="https://1komma5.com/de/heartbeat/" target="_blank" class="banner">
+  <img src="https://github.com/javad-niroumand/Lisa/blob/main/Screenshot%202025-09-17%20231416.jpg?raw=true" alt="Heartbeat AI Banner">
+</a>
 
 <script>
-const apiUrl = "https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1";
-const monthLabel=document.getElementById('monthLabel');
+const apiUrl="https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1";
 const datesRow=document.getElementById('datesRow');
-let baseDate=new Date();
+const monthLabel=document.getElementById('monthLabel');
+let currentBaseDate=new Date();
 
-/* render dates */
-function renderDates(startDate){
+function renderDates(startDate=new Date()){
   const monthNames=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
   monthLabel.textContent=monthNames[startDate.getMonth()];
   datesRow.innerHTML='';
@@ -261,44 +236,37 @@ function renderDates(startDate){
   }
 }
 
+// month navigation
 document.getElementById('prevMonth').onclick=()=>{
-  baseDate.setMonth(baseDate.getMonth()-1);
-  renderDates(baseDate);
-}
+  currentBaseDate.setMonth(currentBaseDate.getMonth()-1);
+  renderDates(currentBaseDate);
+};
 document.getElementById('nextMonth').onclick=()=>{
-  baseDate.setMonth(baseDate.getMonth()+1);
-  renderDates(baseDate);
-}
+  currentBaseDate.setMonth(currentBaseDate.getMonth()+1);
+  renderDates(currentBaseDate);
+};
 
-/* Clock running */
-function updateClock(){
-  const now=new Date();
-  document.getElementById('clock').textContent=now.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-}
-setInterval(updateClock,1000);
-updateClock();
-
-/* API prefill */
+// API prefill
 window.addEventListener('DOMContentLoaded',async()=>{
   try{
     const res=await fetch(apiUrl);
     if(!res.ok)return;
     const user=await res.json();
 
-    // set baseDate to API date if present
+    // base date from API
     if(user.CallDate){
-      const [day,month,yearApi]=user.CallDate.split('/');
-      baseDate=new Date(`${yearApi}-${month}-${day}`);
+      const [day,month,year]=user.CallDate.split('/');
+      currentBaseDate=new Date(`${year}-${month}-${day}`);
     }
-    renderDates(baseDate);
+    renderDates(currentBaseDate);
 
     document.getElementById('userName').textContent=user.Username||'';
     document.getElementById('userPhone').textContent=user.PhoneNumber||'';
 
-    // mark active
+    // highlight API date
     document.querySelectorAll('.date-item').forEach(el=>el.classList.remove('active'));
     [...datesRow.children].forEach(el=>{
-      if(el.querySelector('.dom').textContent==baseDate.getDate()){
+      if(el.querySelector('.dom').textContent==currentBaseDate.getDate()){
         el.classList.add('active');
       }
     });
@@ -306,25 +274,32 @@ window.addEventListener('DOMContentLoaded',async()=>{
   }catch(err){console.error("Prefill error:",err);}
 });
 
-/* Save click */
+// save button
 document.getElementById('saveBtn').onclick=async()=>{
-  const activeDateEl=document.querySelector('.date-item.active .dom');
-  if(!activeDateEl){alert("Bitte ein Datum wählen");return;}
-  const chosenDay=activeDateEl.textContent;
-  const month=baseDate.getMonth()+1;
-  const year=baseDate.getFullYear();
-  const formattedDate=`${chosenDay}/${month.toString().padStart(2,'0')}/${year}`;
+  // get selected date
+  let selectedDay=document.querySelector('.date-item.active .dom')?.textContent;
+  let selectedMonth=currentBaseDate.getMonth()+1;
+  let selectedYear=currentBaseDate.getFullYear();
+  let formattedDate=`${selectedDay}/${selectedMonth.toString().padStart(2,'0')}/${selectedYear}`;
+
   const data={
     PhoneNumber:document.getElementById('userPhone').textContent,
     CallDate:formattedDate,
     CallTime:document.getElementById('timeInput').value
   };
   try{
-    const res=await fetch(apiUrl,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
-    if(res.ok){alert("✔️ Rückrufdaten angepasst!");}
-    else{alert("❌ Änderungen konnten nicht gespeichert werden.");}
-  }catch(err){alert("Fehler:"+err.message);}
-}
+    const res=await fetch(apiUrl,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
+    });
+    if(res.ok){
+      alert("✔️ Rückrufdaten aktualisiert");
+    }else{
+      alert("❌ Fehler beim Speichern");
+    }
+  }catch(err){alert("🚨 Fehler: "+err.message);}
+};
 </script>
 </body>
 </html>
