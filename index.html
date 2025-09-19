@@ -2,322 +2,309 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rückruf Informationen</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-:root{
-  --purple:#8b5cf6;
-}
-body{
-  margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:#f4f4f4;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  color:#222;
-}
-header{
-  width:100%;
-  background:#fff;
-  text-align:center;
-  padding:15px 0;
-}
-header img{height:40px;}
-header h1{
-  margin:5px 0;
-  font-size:22px;
-  font-weight:700;
-  color:var(--purple);
-  letter-spacing:0.5px;
-}
+  :root {
+    --purple:#8b5cf6;
+    --light:#fff;
+    --maxWidth:360px;
+  }
+  body {
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:#f4f4f4;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    color:#222;
+  }
+  header {
+    background:#fff;
+    width:100%;
+    text-align:center;
+    padding:10px 0;
+  }
+  header img {height:40px;}
+  header h1 {margin:5px 0 0;font-size:18px;font-weight:600;color:var(--purple);}
 
-/* Banner */
-.top-banner{
-  background:var(--purple);
-  padding:12px;
-  display:flex;
-  flex-direction:column;
-  border-radius:12px;
-  color:#fff;
-  width:100%;
-  max-width:420px;
-  box-sizing:border-box;
-  margin:10px auto;
-}
-.banner-header{
-  display:flex;
-  justify-content:space-between;
-  font-weight:600;
-  font-size:14px;
-}
-.banner-header span{cursor:pointer;}
-.dates{
-  display:flex;
-  justify-content:space-around;
-  gap:4px;
-  margin-top:8px;
-}
-.date-item{
-  flex:1;
-  background:rgba(255,255,255,0.1);
-  border:1px solid rgba(255,255,255,0.3);
-  border-radius:8px;
-  text-align:center;
-  padding:4px 0;
-  font-size:11px;
-  cursor:pointer;
-}
-.date-item .dom{display:block;font-size:13px;font-weight:700;}
-.date-item.active{background:#fff;color:var(--purple);}
+  /* Banner */
+  .top-banner {
+    background:var(--purple);
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+    border-radius:12px;
+    color:white;
+    width:var(--maxWidth);
+    box-sizing:border-box;
+    margin:10px auto;
+  }
+  .banner-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-weight:600;
+    margin-bottom:8px;
+    font-size:14px;
+  }
+  .banner-header span {cursor:pointer;}
+  .dates {
+    display:flex;
+    justify-content:space-around;
+    gap:4px;
+  }
+  .date-item {
+    flex:1;
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.3);
+    border-radius:8px;
+    text-align:center;
+    padding:4px 0;
+    font-size:11px;
+    cursor:pointer;
+  }
+  .date-item .dom {
+    display:block;
+    font-size:13px;
+    font-weight:700;
+  }
+  .date-item.active {
+    background:#fff;
+    color:var(--purple);
+  }
 
-/* Time */
-.time-container{
-  width:100%;
-  max-width:420px;
-  text-align:center;
-  margin:10px auto;
-  padding:0 8px;
-  box-sizing:border-box;
-}
-.time-container label{
-  display:block;
-  font-weight:600;
-  margin-bottom:4px;
-}
-.time-container input{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:1px solid #ccc;
-  font-size:16px;
-  text-align:center;
-}
+  /* Clock */
+  .clock {
+    text-align:center;
+    font-size:26px;
+    font-weight:600;
+    padding:10px;
+    color:#333;
+    width:var(--maxWidth);
+    box-sizing:border-box;
+  }
+  .time-picker {
+    width:var(--maxWidth);
+    text-align:center;
+    margin-bottom:10px;
+  }
+  .time-picker input {
+    width:100%;
+    padding:8px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:16px;
+    text-align:center;
+  }
 
-/* Appointment boxes */
-.appointments{
-  width:100%;
-  max-width:420px;
-  margin:5px auto;
-  padding:0 8px;
-  box-sizing:border-box;
-}
-.appointment-box{
-  background:#fff;
-  padding:12px;
-  border-radius:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.1);
-  margin-bottom:8px;
-}
-.appointment-box h3{
-  margin:0 0 3px;
-  font-size:14px;
-  color:var(--purple);
-}
-.appointment-box p{margin:0;font-size:13px;}
+  /* Appointment boxes */
+  .appointments {
+    width:var(--maxWidth);
+    margin:5px auto;
+  }
+  .appointment-box {
+    background:#fff;
+    padding:12px;
+    border-radius:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    margin-bottom:8px;
+  }
+  .appointment-box h3 {
+    margin:0 0 3px;
+    font-size:14px;
+    color:var(--purple);
+  }
+  .appointment-box p {
+    margin:0;
+    font-size:13px;
+  }
 
-/* Buttons */
-.buttons{
-  width:100%;
-  max-width:420px;
-  margin:10px auto;
-  padding:0 8px;
-  box-sizing:border-box;
-  text-align:center;
-}
-.save-btn{
-  width:100%;
-  background:var(--purple);
-  color:#fff;
-  font-weight:bold;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:16px;
-}
+  /* Buttons */
+  .buttons {
+    width:var(--maxWidth);
+    margin:10px auto;
+    text-align:center;
+  }
+  .save-btn {
+    width:100%;
+    background:var(--purple);
+    color:#fff;
+    font-weight:600;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+  }
 
-/* Services */
-.services{
-  background:#fff;
-  width:100%;
-  max-width:420px;
-  margin:12px auto;
-  border-radius:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.1);
-  padding:14px;
-  text-align:center;
-  box-sizing:border-box;
-}
-.services p{
-  font-size:15px;
-  font-weight:600;
-  color:#333;
-  margin-bottom:10px;
-  line-height:1.4;
-}
-.icons{
-  display:flex;
-  justify-content:space-around;
-  margin-top:8px;
-}
-.icon-circle{
-  background:var(--purple);
-  color:#fff;
-  width:45px;
-  height:45px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:18px;
-}
+  /* Service Icons */
+  .service-icons {
+    width:var(--maxWidth);
+    display:flex;
+    justify-content:space-around;
+    margin-top:10px;
+  }
+  .service-icons .icon {
+    background:var(--purple);
+    color:#fff;
+    width:48px;height:48px;
+    display:flex;justify-content:center;align-items:center;
+    border-radius:50%;
+    font-size:20px;
+  }
 
-/* Banner image */
-.banner-img{
-  width:100%;
-  max-width:420px;
-  border-radius:12px;
-  overflow:hidden;
-  margin:12px auto;
-  box-sizing:border-box;
-}
-.banner-img img{
-  width:100%;
-  display:block;
-}
+  .service-text {
+    width:var(--maxWidth);
+    text-align:center;
+    font-size:14px;
+    font-weight:500;
+    color:#333;
+    margin-top:5px;
+  }
+
+  /* Responsive */
+  @media (max-width:400px){
+    :root {--maxWidth:94vw;}
+  }
 </style>
 </head>
 <body>
+  <header>
+    <img src="https://intranet.gruendungswerft.com/wp-content/uploads/2024/05/1komma5.png">
+    <h1>Rückruf&nbsp;Informationen</h1>
+  </header>
 
-<header>
-  <img src="https://intranet.gruendungswerft.com/wp-content/uploads/2024/05/1komma5.png">
-  <h1>Rückruf&nbsp;Informationen</h1>
-</header>
-
-<div class="top-banner">
-  <div class="banner-header">
-    <span id="prevMonth">‹</span>
-    <div id="monthLabel">September</div>
-    <span id="nextMonth">›</span>
+  <!-- Banner -->
+  <div class="top-banner">
+    <div class="banner-header">
+      <span id="prevMonth"><i class="fa fa-chevron-left"></i></span>
+      <span id="monthLabel">Monat</span>
+      <span id="nextMonth"><i class="fa fa-chevron-right"></i></span>
+    </div>
+    <div class="dates" id="datesRow"></div>
   </div>
-  <div class="dates" id="datesRow"></div>
-</div>
 
-<div class="time-container">
-  <label for="timeInput">Gewünschte Rückrufzeit</label>
-  <input type="time" id="timeInput" value="21:00">
-</div>
-
-<div class="appointments">
-  <div class="appointment-box">
-    <h3>Kundename</h3>
-    <p id="userName"></p>
+  <!-- Clock -->
+  <div class="clock" id="clock">--:--</div>
+  <div class="time-picker">
+    <input type="time" id="timeInput" value="09:00">
   </div>
-  <div class="appointment-box">
-    <h3>Telefonnummer</h3>
-    <p id="userPhone"></p>
+
+  <!-- Appointments -->
+  <div class="appointments">
+    <div class="appointment-box">
+      <h3>Name</h3>
+      <p id="userName">-</p>
+    </div>
+    <div class="appointment-box">
+      <h3>Telefonnummer</h3>
+      <p id="userPhone">-</p>
+    </div>
   </div>
-</div>
 
-<div class="buttons">
-  <button class="save-btn" id="saveBtn">Rückruf anpassen</button>
-</div>
-
-<div class="services">
-  <p>Unser Kundenservice ist<br><strong>rund um die Uhr (24h) für Sie erreichbar</strong>.</p>
-  <div class="icons">
-    <div class="icon-circle"><i class="fa fa-envelope"></i></div>
-    <div class="icon-circle"><i class="fa fa-phone"></i></div>
-    <div class="icon-circle"><i class="fa-brands fa-whatsapp"></i></div>
+  <!-- Buttons -->
+  <div class="buttons">
+    <button class="save-btn" id="saveBtn">Rückruf anpassen</button>
   </div>
-</div>
 
-<div class="banner-img">
-  <img src="https://github.com/javad-niroumand/Lisa/blob/main/Screenshot%202025-09-17%20231416.jpg?raw=true" alt="Banner">
-</div>
+  <!-- Service Icons -->
+  <div class="service-icons">
+    <div class="icon"><i class="fa fa-envelope"></i></div>
+    <div class="icon"><i class="fa fa-phone"></i></div>
+    <div class="icon"><i class="fa fa-whatsapp"></i></div>
+  </div>
+  <div class="service-text">Unser Kundenservice ist 24&nbsp;Stunden für Sie erreichbar.</div>
 
 <script>
 const apiUrl = "https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1";
-
-/* month/dates rendering */
 const monthLabel=document.getElementById('monthLabel');
 const datesRow=document.getElementById('datesRow');
-let monthIndex=new Date().getMonth();
-let year=new Date().getFullYear();
-function renderDates(){
-  const monthNames=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
-  monthLabel.textContent=monthNames[monthIndex];
+let baseDate=new Date();
+
+/* render dates */
+function renderDates(startDate){
+  const monthNames=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+  monthLabel.textContent=monthNames[startDate.getMonth()];
   datesRow.innerHTML='';
   for(let i=0;i<5;i++){
-    const d=new Date(year,monthIndex,new Date().getDate()+i);
+    const d=new Date(startDate.getFullYear(),startDate.getMonth(),startDate.getDate()+i);
     const div=document.createElement('div');
     div.className='date-item';
     div.innerHTML=`${d.toLocaleDateString('de-DE',{weekday:'short'})}<span class="dom">${d.getDate()}</span>`;
-    div.onclick=()=>{document.querySelectorAll('.date-item').forEach(x=>x.classList.remove('active'));div.classList.add('active');};
+    div.onclick=()=>{
+      document.querySelectorAll('.date-item').forEach(x=>x.classList.remove('active'));
+      div.classList.add('active');
+    };
     datesRow.appendChild(div);
   }
 }
-document.getElementById('prevMonth').onclick=()=>{monthIndex=(monthIndex-1+12)%12;renderDates();};
-document.getElementById('nextMonth').onclick=()=>{monthIndex=(monthIndex+1)%12;renderDates();};
-renderDates();
+
+document.getElementById('prevMonth').onclick=()=>{
+  baseDate.setMonth(baseDate.getMonth()-1);
+  renderDates(baseDate);
+}
+document.getElementById('nextMonth').onclick=()=>{
+  baseDate.setMonth(baseDate.getMonth()+1);
+  renderDates(baseDate);
+}
+
+/* Clock running */
+function updateClock(){
+  const now=new Date();
+  document.getElementById('clock').textContent=now.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+}
+setInterval(updateClock,1000);
+updateClock();
 
 /* API prefill */
-window.addEventListener('DOMContentLoaded', async () => {
-  try {
-    const res = await fetch(apiUrl);
-    if (!res.ok) return;
-    const user = await res.json();
-    document.getElementById('userName').textContent = user.Username || '';
-    document.getElementById('userPhone').textContent = user.PhoneNumber || '';
+window.addEventListener('DOMContentLoaded',async()=>{
+  try{
+    const res=await fetch(apiUrl);
+    if(!res.ok)return;
+    const user=await res.json();
 
-    // remove existing active before marking API date
-    document.querySelectorAll('.date-item').forEach(el=>el.classList.remove('active'));
-
-    if (user.CallDate) {
-      const parts = user.CallDate.split('/');
-      if (parts.length === 3) {
-        const day = parts[0];
-        [...datesRow.children].forEach(el=>{
-          if(el.querySelector('.dom').textContent==day){
-            el.classList.add('active');
-          }
-        });
-      }
+    // set baseDate to API date if present
+    if(user.CallDate){
+      const [day,month,yearApi]=user.CallDate.split('/');
+      baseDate=new Date(`${yearApi}-${month}-${day}`);
     }
-    document.getElementById('timeInput').value = user.CallTime || '09:00';
-  } catch (err) {
-    console.error("Prefill error:", err);
-  }
+    renderDates(baseDate);
+
+    document.getElementById('userName').textContent=user.Username||'';
+    document.getElementById('userPhone').textContent=user.PhoneNumber||'';
+
+    // mark active
+    document.querySelectorAll('.date-item').forEach(el=>el.classList.remove('active'));
+    [...datesRow.children].forEach(el=>{
+      if(el.querySelector('.dom').textContent==baseDate.getDate()){
+        el.classList.add('active');
+      }
+    });
+    document.getElementById('timeInput').value=user.CallTime||'09:00';
+  }catch(err){console.error("Prefill error:",err);}
 });
 
-/* Save */
-document.getElementById('saveBtn').addEventListener('click', async () => {
-  const selectedDateItem=document.querySelector('.date-item.active .dom');
-  let day=selectedDateItem?selectedDateItem.textContent:new Date().getDate();
-  let formattedDate=`${day}/${(monthIndex+1).toString().padStart(2,'0')}/${year}`;
+/* Save click */
+document.getElementById('saveBtn').onclick=async()=>{
+  const activeDateEl=document.querySelector('.date-item.active .dom');
+  if(!activeDateEl){alert("Bitte ein Datum wählen");return;}
+  const chosenDay=activeDateEl.textContent;
+  const month=baseDate.getMonth()+1;
+  const year=baseDate.getFullYear();
+  const formattedDate=`${chosenDay}/${month.toString().padStart(2,'0')}/${year}`;
   const data={
     PhoneNumber:document.getElementById('userPhone').textContent,
     CallDate:formattedDate,
     CallTime:document.getElementById('timeInput').value
   };
   try{
-    const res=await fetch(apiUrl,{
-      method:'PUT',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(data)
-    });
-    if(res.ok){
-      alert("✔️ Rückruf erfolgreich angepasst.");
-    } else {
-      alert("❌ Änderungen konnten nicht gespeichert werden.");
-    }
-  }catch(err){
-    alert("🚨 Fehler: "+err.message);
-  }
-});
+    const res=await fetch(apiUrl,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    if(res.ok){alert("✔️ Rückrufdaten angepasst!");}
+    else{alert("❌ Änderungen konnten nicht gespeichert werden.");}
+  }catch(err){alert("Fehler:"+err.message);}
+}
 </script>
-
 </body>
 </html>
