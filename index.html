@@ -186,6 +186,40 @@ header h1{margin:5px 0 0;font-size:18px;color:var(--purple);font-weight:600}
   margin:15px auto;
 }
 .banner img{width:100%;display:block;}
+
+/* Popup modal */
+#confirmPopup{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100vw;height:100vh;
+  background:rgba(0,0,0,0.5);
+  z-index:9999;
+  justify-content:center;
+  align-items:center;
+}
+#confirmPopup .popup-content{
+  background:#fff;
+  border-radius:12px;
+  padding:20px;
+  max-width:300px;
+  text-align:center;
+  box-shadow:0 0 15px rgba(0,0,0,0.2);
+}
+#confirmPopup h2{
+  margin-top:0;
+  color:var(--purple);
+  font-size:18px;
+}
+#confirmPopup button{
+  margin-top:10px;
+  background:var(--purple);
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  padding:8px 14px;
+  cursor:pointer;
+}
 </style>
 </head>
 <body>
@@ -241,6 +275,15 @@ header h1{margin:5px 0 0;font-size:18px;color:var(--purple);font-weight:600}
   <img src="https://github.com/javad-niroumand/Lisa/blob/main/Screenshot%202025-09-17%20231416.jpg?raw=true" alt="Heartbeat AI Banner">
 </a>
 
+<!-- Popup modal -->
+<div id="confirmPopup">
+  <div class="popup-content">
+    <h2>✔️ Rückrufdaten aktualisiert</h2>
+    <p>Ihre Rückrufdaten wurden erfolgreich gespeichert.</p>
+    <button id="closePopup">OK</button>
+  </div>
+</div>
+
 <script>
 const apiUrl="https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1";
 const datesRow=document.getElementById('datesRow');
@@ -273,7 +316,6 @@ fillDigits(hOnes,10);
 fillDigits(mTens,6);
 fillDigits(mOnes,10);
 
-// adjust hour ones depending on tens
 function adjustHourOnes(){
   const tens=getSelectedValue(hTens);
   if(tens===2){
@@ -284,8 +326,6 @@ function adjustHourOnes(){
   const idx=getSelectedIndex(hOnes);
   if(tens===2 && idx>3)setScroll(hOnes,3);
 }
-
-// add scroll listeners
 [hTens].forEach(col=>{
   col.addEventListener('scroll',()=>{
     clearTimeout(col._timeout);
@@ -339,16 +379,13 @@ window.addEventListener('DOMContentLoaded',async()=>{
     document.getElementById('userName').textContent=user.Username||'';
     document.getElementById('userPhone').textContent=user.PhoneNumber||'';
 
-    // select and center
     const targetDay=currentBaseDate.getDate();
     const activeEl=[...datesRow.children].find(el=>el.querySelector('.dom').textContent==targetDay);
     if(activeEl){
       activeEl.classList.add('active');
-      // auto center
       datesRow.scrollLeft=activeEl.offsetLeft - datesRow.clientWidth/2 + activeEl.clientWidth/2;
     }
 
-    // set clock from API time
     let time=user.CallTime||'09:00';
     let [h,m]=time.split(':');
     h=h.padStart(2,'0');m=m.padStart(2,'0');
@@ -379,9 +416,14 @@ document.getElementById('saveBtn').onclick=async()=>{
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify(data)
     });
-    if(res.ok){alert("✔️ Ihre Rückrufdaten wurden erfolgreich angepasst.");}
+    if(res.ok){
+      document.getElementById('confirmPopup').style.display='flex';
+    }
     else{alert("❌ Fehler beim Speichern der Rückrufdaten.");}
   }catch(err){alert("🚨 Fehler: "+err.message);}
+};
+document.getElementById('closePopup').onclick=()=>{
+  document.getElementById('confirmPopup').style.display='none';
 };
 </script>
 </body>
