@@ -51,11 +51,15 @@ header h1{margin:5px 0 0;font-size:18px;color:var(--purple);font-weight:600}
 .banner-header span{cursor:pointer;}
 .dates{
   display:flex;
-  justify-content:space-around;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
   gap:4px;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:6px;
 }
 .date-item{
-  flex:1;
+  min-width:60px;
+  flex:0 0 auto;
   background:rgba(255,255,255,0.1);
   border:1px solid rgba(255,255,255,0.3);
   border-radius:8px;
@@ -63,27 +67,45 @@ header h1{margin:5px 0 0;font-size:18px;color:var(--purple);font-weight:600}
   padding:4px 0;
   font-size:11px;
   cursor:pointer;
+  scroll-snap-align:center;
 }
 .date-item .dom{display:block;font-size:13px;font-weight:700;}
 .date-item.active{background:#fff;color:var(--purple);}
 
-/* Clock */
-.clock{
-  text-align:center;
-  font-size:30px;
-  font-weight:600;
-  padding:12px;
-  color:#333;
-  width:95%;
-  max-width:500px;
-  box-sizing:border-box;
-}
-.clock input[type=time]{
+/* Clock with scrolling digits */
+.clock-container{
+  display:flex;
+  background:#fff;
+  padding:10px;
+  border-radius:12px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  font-size:36px;
+  font-weight:bold;
+  color:var(--purple);
   width:100%;
-  font-size:20px;
-  padding:6px;
-  border:1px solid #ccc;
-  border-radius:8px;
+  max-width:420px;
+  box-sizing:border-box;
+  justify-content:center;
+  margin-top:8px;
+}
+.digit-column{
+  width:40px;
+  height:50px;
+  overflow-y:scroll;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  text-align:center;
+  scroll-snap-type:y mandatory;
+}
+.digit-column::-webkit-scrollbar{display:none;}
+.digit{
+  height:50px;
+  line-height:50px;
+  scroll-snap-align:start;
+}
+.separator{
+  line-height:50px;
+  margin:0 5px;
 }
 
 /* Appointment boxes */
@@ -182,8 +204,13 @@ header h1{margin:5px 0 0;font-size:18px;color:var(--purple);font-weight:600}
   <div class="dates" id="datesRow"></div>
 </div>
 
-<div class="clock">
-  <input type="time" id="timeInput">
+<!-- Clock -->
+<div class="clock-container">
+  <div class="digit-column" id="hTens"></div>
+  <div class="digit-column" id="hOnes"></div>
+  <div class="separator">:</div>
+  <div class="digit-column" id="mTens"></div>
+  <div class="digit-column" id="mOnes"></div>
 </div>
 
 <div class="appointments">
@@ -220,15 +247,65 @@ const datesRow=document.getElementById('datesRow');
 const monthLabel=document.getElementById('monthLabel');
 let currentBaseDate=new Date();
 
-function renderDates(startDate=new Date()){
+// fill digits for the clock
+function fillDigits(col,max){
+  col.innerHTML='';
+  for(let i=0;i<max;i++){
+    const d=document.createElement('div');
+    d.className='digit';
+    d.textContent=i;
+    col.appendChild(d);
+  }
+}
+function setScroll(col,idx){col.scrollTop=idx*50;}
+function getSelectedIndex(col){return Math.round(col.scrollTop/50);}
+function getSelectedValue(col){
+  return parseInt(col.children[getSelectedIndex(col)].textContent);
+}
+
+// prepare columns
+const hTens=document.getElementById('hTens');
+const hOnes=document.getElementById('hOnes');
+const mTens=document.getElementById('mTens');
+const mOnes=document.getElementById('mOnes');
+fillDigits(hTens,3);
+fillDigits(hOnes,10);
+fillDigits(mTens,6);
+fillDigits(mOnes,10);
+
+// adjust hour ones depending on tens
+function adjustHourOnes(){
+  const tens=getSelectedValue(hTens);
+  if(tens===2){
+    fillDigits(hOnes,4);
+  }else{
+    fillDigits(hOnes,10);
+  }
+  const idx=getSelectedIndex(hOnes);
+  if(tens===2 && idx>3)setScroll(hOnes,3);
+}
+
+// add scroll listeners
+[hTens].forEach(col=>{
+  col.addEventListener('scroll',()=>{
+    clearTimeout(col._timeout);
+    col._timeout=setTimeout(adjustHourOnes,150);
+  });
+});
+
+// render all days horizontally
+function renderDates(monthDate=new Date()){
   const monthNames=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
-  monthLabel.textContent=monthNames[startDate.getMonth()];
+  monthLabel.textContent=monthNames[monthDate.getMonth()];
   datesRow.innerHTML='';
-  for(let i=0;i<5;i++){
-    const d=new Date(startDate.getFullYear(),startDate.getMonth(),startDate.getDate()+i);
+  const year=monthDate.getFullYear();
+  const month=monthDate.getMonth();
+  const lastDay=new Date(year,month+1,0).getDate();
+  for(let day=1;day<=lastDay;day++){
+    const d=new Date(year,month,day);
     const div=document.createElement('div');
     div.className='date-item';
-    div.innerHTML=`${d.toLocaleDateString('de-DE',{weekday:'short'})}<span class="dom">${d.getDate()}</span>`;
+    div.innerHTML=`${d.toLocaleDateString('de-DE',{weekday:'short'})}<span class="dom">${day}</span>`;
     div.onclick=()=>{
       document.querySelectorAll('.date-item').forEach(x=>x.classList.remove('active'));
       div.classList.add('active');
@@ -237,6 +314,7 @@ function renderDates(startDate=new Date()){
   }
 }
 
+// month navigation
 document.getElementById('prevMonth').onclick=()=>{
   currentBaseDate.setMonth(currentBaseDate.getMonth()-1);
   renderDates(currentBaseDate);
@@ -246,6 +324,7 @@ document.getElementById('nextMonth').onclick=()=>{
   renderDates(currentBaseDate);
 };
 
+// prefill
 window.addEventListener('DOMContentLoaded',async()=>{
   try{
     const res=await fetch(apiUrl);
@@ -260,25 +339,39 @@ window.addEventListener('DOMContentLoaded',async()=>{
     document.getElementById('userName').textContent=user.Username||'';
     document.getElementById('userPhone').textContent=user.PhoneNumber||'';
 
-    document.querySelectorAll('.date-item').forEach(el=>el.classList.remove('active'));
-    [...datesRow.children].forEach(el=>{
-      if(el.querySelector('.dom').textContent==currentBaseDate.getDate()){
-        el.classList.add('active');
-      }
-    });
-    document.getElementById('timeInput').value=user.CallTime||'09:00';
+    // select and center
+    const targetDay=currentBaseDate.getDate();
+    const activeEl=[...datesRow.children].find(el=>el.querySelector('.dom').textContent==targetDay);
+    if(activeEl){
+      activeEl.classList.add('active');
+      // auto center
+      datesRow.scrollLeft=activeEl.offsetLeft - datesRow.clientWidth/2 + activeEl.clientWidth/2;
+    }
+
+    // set clock from API time
+    let time=user.CallTime||'09:00';
+    let [h,m]=time.split(':');
+    h=h.padStart(2,'0');m=m.padStart(2,'0');
+    setScroll(hTens,parseInt(h[0]));
+    setScroll(hOnes,parseInt(h[1]));
+    setScroll(mTens,parseInt(m[0]));
+    setScroll(mOnes,parseInt(m[1]));
   }catch(err){console.error("Prefill error:",err);}
 });
 
+// save
 document.getElementById('saveBtn').onclick=async()=>{
   let selectedDay=document.querySelector('.date-item.active .dom')?.textContent;
   let selectedMonth=currentBaseDate.getMonth()+1;
   let selectedYear=currentBaseDate.getFullYear();
   let formattedDate=`${selectedDay}/${selectedMonth.toString().padStart(2,'0')}/${selectedYear}`;
+  const h=parseInt(getSelectedValue(hTens).toString()+getSelectedValue(hOnes).toString());
+  const m=parseInt(getSelectedValue(mTens).toString()+getSelectedValue(mOnes).toString());
+  const formattedTime=`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
   const data={
     PhoneNumber:document.getElementById('userPhone').textContent,
     CallDate:formattedDate,
-    CallTime:document.getElementById('timeInput').value
+    CallTime:formattedTime
   };
   try{
     const res=await fetch(apiUrl,{
@@ -286,12 +379,10 @@ document.getElementById('saveBtn').onclick=async()=>{
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify(data)
     });
-    if(res.ok){alert("✔️ Rückrufdaten aktualisiert");}
-    else{alert("❌ Fehler beim Speichern");}
+    if(res.ok){alert("✔️ Ihre Rückrufdaten wurden erfolgreich angepasst.");}
+    else{alert("❌ Fehler beim Speichern der Rückrufdaten.");}
   }catch(err){alert("🚨 Fehler: "+err.message);}
 };
 </script>
 </body>
 </html>
-
-
