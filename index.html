@@ -8,44 +8,40 @@
 <style>
 :root {
   --theme-purple:#582d7d;
-  --theme-light:#7c4bb5;
-  --text-dark:#1e2a3a;
-  --text-light:#e6eef8;
+  --dark-gray:#1e2a3a;
+  --light-text:#e6eef8;
 }
-
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
-  background:var(--theme-purple);
+  background:#582d7d;
   display:flex;
   flex-direction:column;
   align-items:center;
-  color:var(--text-light);
+  color:var(--light-text);
 }
-
 header{
-  background:var(--theme-light);
+  background:#fff;
   width:100%;
   text-align:center;
   padding:10px 0;
-  border-bottom:2px solid #4a2c7a;
 }
 header img{height:40px;}
 header h1{
   margin:5px 0 0;
   font-size:18px;
-  color:var(--text-light);
+  color:var(--theme-purple);
   font-weight:600;
 }
 
 /* Banner */
 .top-banner{
-  background:var(--theme-light);
+  background:var(--theme-purple);
   padding:12px;
   display:flex;
   flex-direction:column;
   border-radius:12px;
-  color:var(--text-light);
+  color:var(--light-text);
   width:100%;
   max-width:420px;
   box-sizing:border-box;
@@ -79,18 +75,18 @@ header h1{
   font-size:11px;
   cursor:pointer;
   scroll-snap-align:center;
-  color:var(--text-light);
+  color:var(--light-text);
 }
 .date-item .dom{display:block;font-size:13px;font-weight:700;}
-.date-item.active{background:var(--text-light);color:var(--theme-purple);}
+.date-item.active{background:#fff;color:var(--theme-purple);}
 
-/* Clock with scrolling digits */
+/* Clock */
 .clock-container{
   display:flex;
-  background:var(--theme-light);
+  background:#fff;
   padding:10px;
   border-radius:12px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
   font-size:36px;
   font-weight:bold;
   color:var(--theme-purple);
@@ -110,15 +106,8 @@ header h1{
   scroll-snap-type:y mandatory;
 }
 .digit-column::-webkit-scrollbar{display:none;}
-.digit{
-  height:50px;
-  line-height:50px;
-  scroll-snap-align:start;
-}
-.separator{
-  line-height:50px;
-  margin:0 5px;
-}
+.digit{height:50px;line-height:50px;scroll-snap-align:start;}
+.separator{line-height:50px;margin:0 5px;}
 
 /* Appointment boxes */
 .appointments{
@@ -127,10 +116,10 @@ header h1{
   margin:5px auto;
 }
 .appointment-box{
-  background:var(--theme-light);
+  background:#fff;
   padding:12px;
   border-radius:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
   margin-bottom:8px;
 }
 .appointment-box h3{
@@ -138,7 +127,7 @@ header h1{
   font-size:14px;
   color:var(--theme-purple);
 }
-.appointment-box p{margin:0;font-size:13px;color:var(--text-light);}
+.appointment-box p{margin:0;font-size:13px;color:var(--dark-gray);}
 
 /* Buttons */
 .buttons{
@@ -153,7 +142,7 @@ header h1{
   border:none;
   border-radius:8px;
   background:var(--theme-purple);
-  color:var(--text-light);
+  color:#fff;
   font-size:15px;
   font-weight:600;
   cursor:pointer;
@@ -169,7 +158,7 @@ header h1{
 }
 .service-icons .icon{
   background:var(--theme-purple);
-  color:var(--text-light);
+  color:#fff;
   width:50px;
   height:50px;
   display:flex;
@@ -185,7 +174,7 @@ header h1{
   font-size:14px;
   font-weight:500;
   margin-top:6px;
-  color:var(--text-light);
+  color:var(--light-text);
 }
 
 /* Banner at bottom */
@@ -194,7 +183,7 @@ header h1{
   max-width:420px;
   border-radius:12px;
   overflow:hidden;
-  box-shadow:0 0 15px rgba(0,0,0,0.2);
+  box-shadow:0 0 15px rgba(0,0,0,0.15);
   margin:15px auto;
 }
 .banner img{width:100%;display:block;}
@@ -211,13 +200,12 @@ header h1{
   align-items:center;
 }
 #confirmPopup .popup-content{
-  background:var(--theme-light);
+  background:#fff;
   border-radius:12px;
   padding:20px;
   max-width:300px;
   text-align:center;
-  box-shadow:0 0 15px rgba(0,0,0,0.3);
-  color:var(--text-light);
+  box-shadow:0 0 15px rgba(0,0,0,0.2);
 }
 #confirmPopup h2{
   margin-top:0;
@@ -227,7 +215,7 @@ header h1{
 #confirmPopup button{
   margin-top:10px;
   background:var(--theme-purple);
-  color:var(--text-light);
+  color:#fff;
   border:none;
   border-radius:8px;
   padding:8px 14px;
@@ -284,12 +272,149 @@ header h1{
   Unser Kundenservice ist <strong>24&nbsp;Stunden</strong> für Sie erreichbar.
 </div>
 
-<a href="https://www.evm.de/privatkunden/" target="_blank" class="banner">
-  <img src="https://github.com/javad-niroumand/Lisa/blob/main/ChatGPT%20Image%20Nov%2025,%202025,%2012_41_51%20PM.png?raw=true?raw=true" alt="Banner">
+<a href="https://www.evm.de/privatkunden//" target="_blank" class="banner">
+  <img src="https://github.com/javad-niroumand/Lisa/blob/main/ChatGPT%20Image%20Nov%2025,%202025,%2002_43_24%20PM%20(1).png?raw=true" alt="Banner">
 </a>
 
 <!-- Popup modal -->
 <div id="confirmPopup">
   <div class="popup-content">
     <h2>✔️ Rückrufdaten aktualisiert</h2>
-    <p>Ihre Rückrufdaten wurden erfol
+    <p>Ihre Rückrufdaten wurden erfolgreich gespeichert.</p>
+    <button id="closePopup">OK</button>
+  </div>
+</div>
+
+<script>
+// Same JS logic as before, kept intact
+const apiUrl="https://6797e9d9c2c861de0c6e6bdf.mockapi.io/costumerData/1";
+const datesRow=document.getElementById('datesRow');
+const monthLabel=document.getElementById('monthLabel');
+let currentBaseDate=new Date();
+
+function fillDigits(col,max){
+  col.innerHTML='';
+  for(let i=0;i<max;i++){
+    const d=document.createElement('div');
+    d.className='digit';
+    d.textContent=i;
+    col.appendChild(d);
+  }
+}
+function setScroll(col,idx){col.scrollTop=idx*50;}
+function getSelectedIndex(col){return Math.round(col.scrollTop/50);}
+function getSelectedValue(col){
+  return parseInt(col.children[getSelectedIndex(col)].textContent);
+}
+
+const hTens=document.getElementById('hTens');
+const hOnes=document.getElementById('hOnes');
+const mTens=document.getElementById('mTens');
+const mOnes=document.getElementById('mOnes');
+fillDigits(hTens,3);
+fillDigits(hOnes,10);
+fillDigits(mTens,6);
+fillDigits(mOnes,10);
+
+function adjustHourOnes(){
+  const tens=getSelectedValue(hTens);
+  if(tens===2){ fillDigits(hOnes,4); }
+  else{ fillDigits(hOnes,10); }
+  const idx=getSelectedIndex(hOnes);
+  if(tens===2 && idx>3)setScroll(hOnes,3);
+}
+[hTens].forEach(col=>{
+  col.addEventListener('scroll',()=>{
+    clearTimeout(col._timeout);
+    col._timeout=setTimeout(adjustHourOnes,150);
+  });
+});
+
+function renderDates(monthDate=new Date()){
+  const monthNames=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+  monthLabel.textContent=monthNames[monthDate.getMonth()];
+  datesRow.innerHTML='';
+  const year=monthDate.getFullYear();
+  const month=monthDate.getMonth();
+  const lastDay=new Date(year,month+1,0).getDate();
+  for(let day=1;day<=lastDay;day++){
+    const d=new Date(year,month,day);
+    const div=document.createElement('div');
+    div.className='date-item';
+    div.innerHTML=`${d.toLocaleDateString('de-DE',{weekday:'short'})}<span class="dom">${day}</span>`;
+    div.onclick=()=>{
+      document.querySelectorAll('.date-item').forEach(x=>x.classList.remove('active'));
+      div.classList.add('active');
+    };
+    datesRow.appendChild(div);
+  }
+}
+
+document.getElementById('prevMonth').onclick=()=>{
+  currentBaseDate.setMonth(currentBaseDate.getMonth()-1);
+  renderDates(currentBaseDate);
+};
+document.getElementById('nextMonth').onclick=()=>{
+  currentBaseDate.setMonth(currentBaseDate.getMonth()+1);
+  renderDates(currentBaseDate);
+};
+
+window.addEventListener('DOMContentLoaded',async()=>{
+  try{
+    const res=await fetch(apiUrl);
+    if(!res.ok)return;
+    const user=await res.json();
+    if(user.CallDate){
+      const [day,month,year]=user.CallDate.split('/');
+      currentBaseDate=new Date(`${year}-${month}-${day}`);
+    }
+    renderDates(currentBaseDate);
+    document.getElementById('userName').textContent=user.Username||'';
+    document.getElementById('userPhone').textContent=user.PhoneNumber||'';
+    const targetDay=currentBaseDate.getDate();
+    const activeEl=[...datesRow.children].find(el=>el.querySelector('.dom').textContent==targetDay);
+    if(activeEl){
+      activeEl.classList.add('active');
+      datesRow.scrollLeft=activeEl.offsetLeft - datesRow.clientWidth/2 + activeEl.clientWidth/2;
+    }
+    let time=user.CallTime||'09:00';
+    let [h,m]=time.split(':');
+    h=h.padStart(2,'0');m=m.padStart(2,'0');
+    setScroll(hTens,parseInt(h[0]));
+    setScroll(hOnes,parseInt(h[1]));
+    setScroll(mTens,parseInt(m[0]));
+    setScroll(mOnes,parseInt(m[1]));
+  }catch(err){console.error("Prefill error:",err);}
+});
+
+document.getElementById('saveBtn').onclick=async()=>{
+  let selectedDay=document.querySelector('.date-item.active .dom')?.textContent;
+  let selectedMonth=currentBaseDate.getMonth()+1;
+  let selectedYear=currentBaseDate.getFullYear();
+  let formattedDate=`${selectedDay}/${selectedMonth.toString().padStart(2,'0')}/${selectedYear}`;
+  const h=parseInt(getSelectedValue(hTens).toString()+getSelectedValue(hOnes).toString());
+  const m=parseInt(getSelectedValue(mTens).toString()+getSelectedValue(mOnes).toString());
+  const formattedTime=`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
+  const data={
+    PhoneNumber:document.getElementById('userPhone').textContent,
+    CallDate:formattedDate,
+    CallTime:formattedTime
+  };
+  try{
+    const res=await fetch(apiUrl,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
+    });
+    if(res.ok){
+      document.getElementById('confirmPopup').style.display='flex';
+    }
+    else{alert("❌ Fehler beim Speichern der Rückrufdaten.");}
+  }catch(err){alert("🚨 Fehler: "+err.message);}
+};
+document.getElementById('closePopup').onclick=()=>{
+  document.getElementById('confirmPopup').style.display='none';
+};
+</script>
+</body>
+</html>
